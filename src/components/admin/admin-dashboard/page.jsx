@@ -14,8 +14,7 @@ import LogoutIcon from '../../svg/Logout';
 import signout from "../../../../public/admin/signout.svg";
 import Image from 'next/image';
 // import Pages from '../pages';
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from 'next/navigation';
 import Dashboard from '../dashboard';
 import Loader from "../loader";
 import { toast } from "react-toastify";

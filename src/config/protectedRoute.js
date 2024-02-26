@@ -22,7 +22,7 @@ const protectedRoute = (WrappedComponent) => {
     useEffect(() => {
       const checkAuth = () => {
         if (!adminAuthToken) {
-          router.push("/admin/sign-in");
+          router.push("/admin");
         }
         if (adminAuthToken) {
           verify();
@@ -40,7 +40,7 @@ const protectedRoute = (WrappedComponent) => {
           `/api/auth/verifyUserToken/${adminAuthToken}`
         );
         if (res?.data?.data === null) {
-          router.push("/admin/sign-in");
+          router.push("/admin");
           dispatch(removeToken());
         }
         if (res.status === 200) {
@@ -49,12 +49,12 @@ const protectedRoute = (WrappedComponent) => {
           return;
         } else {
           dispatch(removeToken());
-          router.push("/admin/sign-in");
+          router.push("/admin");
           setIsLoading(false);
         }
       } catch (error) {
         console.error("Error occurred:", error);
-        router.push("/admin/sign-in");
+        router.push("/admin");
         setIsLoading(false);
       }
     };
