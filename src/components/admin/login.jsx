@@ -9,54 +9,53 @@ import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './loader';
 import Link from 'next/link';
+import { setToken, removeToken,adDetails } from "@/redux/adminSlice/authSlice";
+import { useDispatch } from 'react-redux';
+import RightSection from './RightSection';
 // import { useAuth } from '../Utils/AuthContext';
 
 const Login = () => {
+  const dispatch=useDispatch();
+  const router=useRouter();
     const [loginDetails,setLoginDetails]=useState({
         email:"",
         password:""
     });
-    const router=useRouter();
     const [showPassword,setShowPassword]=useState(false);
     const [isLoading, setLoading] = useState(false);
-    // const { setAuthToken } = useAuth();
-    // const handleSubmit=async (e)=>{
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     try {
-    //         const response = await axios.post(`/api/auth/adminlogin`, loginDetails, {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //         });
-    //         // console.log(response);
-    //         if (response.status === 200) {
-    //             console.log("response",response?.data?.token);
-    //             localStorage.setItem("token", JSON.stringify(response?.data?.token));
-    //             setAuthToken(response?.data?.token)
-    //             router.push("/admin/admin-dashboard");
-    //             setLoading(false);
-    //             toast.success("Login successful!");
-    //       } else {
-    //         toast.error("Invalid credentails");
-        
-    //         setLoading(false);
-    //       }
-    //     } catch(error) {
-    //       console.error("Error during login:", error);
-    //       toast.error("Login failed please try again!");
-         
+
+    const InputHandler = (e) => { 
+      setLoginDetails({...loginDetails, [e.target.name]:e.target.value})
+    };
+
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   setLoading(true);
+    //   try {
+    //     const res = await axios.post("/api/auth/adminLogin", loginDetails, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     });
+    //     console.log(res);
+    //     if (res?.data?.success) {
+    //       toast.success("Login successfully!");
+    //       dispatch(setToken(res?.data?.token));
+    //       dispatch(adDetails(res?.data?.user));
+    //       setLoading(false);
+    //       router.push("/admin/admin-dashboard");
+    //     } else {
+    //       toast.error("Login failed please try later!");
+    //       dispatch(removeToken());
     //       setLoading(false);
     //     }
+    //   } catch (error) {
+    //     console.error("Error during login:", error);
+    //     toast.error(error?.response?.data?.error || "Server error !");
+    //     dispatch(removeToken());
+    //     setLoading(false);
+    //   }
     // };
-
-    const InputHandler = (e) => {
-      
-        setLoginDetails({...loginDetails, [e.target.name]:e.target.value})
-      };
-
-
-
 
 
 
@@ -130,7 +129,7 @@ const Login = () => {
                 </div>
               </form>
             </div>
-            {/* <RightSection /> */}
+            <RightSection/>
           </div>
         </div>
       </div>
