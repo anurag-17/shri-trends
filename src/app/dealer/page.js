@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import DealerDashboard from "@/components/dealer-dashboard/dashboard/DealerDashboard";
+import Dealer from "@/components/dealer-dashboard/dashboard/Dealer";
 
 const page = () => {
   return (
     <>
-     <DealerDashboard />
+     <Dealer />
     </>
   )
 };

@@ -120,7 +120,7 @@ const DealerLogin = () => {
                     >
                       {isLoading ? "Loading.." : "Login"}
                     </button>
-                    <Link href="/forgot-password">
+                    <Link href="/dealer/forgot-password">
                       <div className="text-[16px] font-medium underline text-center py-3 cursor-password">
                         Forgot password
                       </div>

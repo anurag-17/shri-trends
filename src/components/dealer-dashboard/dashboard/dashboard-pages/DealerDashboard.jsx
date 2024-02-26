@@ -1,7 +1,11 @@
 import React from "react";
+import ProductList from "./products/ProductList";
 
 const DealerDashboard = () => {
-  return <div>DealerDashboard</div>;
+  return (
+    <>  <ProductList/>  </>
+  )
 };
 
 export default DealerDashboard;
+  
