@@ -8,6 +8,7 @@
     "build": "next build"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@reduxjs/toolkit": "^2.2.1",
     "aws-sdk": "^2.1565.0",
     "axios": "^1.6.7",
