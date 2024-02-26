@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
 .custom-input{
   @apply py-2 px-4 rounded  w-full placeholder:text-[#00000080] placeholder:text-[12px] text-[14px] text-[black] border hover:border-[#00000080];
 }
@@ -24,6 +26,28 @@
 
 .login-btn{
   background: linear-gradient(54deg, #383260, #d3d0e7)
+}
+/* ----------------   dealer new css -------------- */
+
+.regular-16 {
+  @apply xl:text-[16px] text-[15px] font-[400];
+}
+
+.log_input-label {
+  @apply text-[#262628] font-[400] text-[14px] capitalize;
+}
+
+.log_input{
+  @apply px-4 py-2 2xl:h-[48px] h-[50px] border border-[#f3f3f3] bg-white text-[#262628] text-[15px] font-[400px] leading-normal focus-visible:outline-none placeholder:text-[14px] placeholder:text-[#262628] rounded-[10px]; 
+}
+}
+
+.log-btn {
+  background: linear-gradient(54deg, #356774, #6a8c94d1);
+  transition: all 0.3s ease, color 0.3s ease;
+}
+.log-btn:hover{
+  background: linear-gradient(54deg, #6a8c94d1, #356774);
 }
 
 @media (max-width:768px) {
