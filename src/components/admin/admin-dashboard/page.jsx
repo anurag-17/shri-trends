@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState, Fragment } from "react";
 import axios from "axios";
+import { useDispatch,useSelector } from "react-redux";
 
 import HomeIcon from "../../../../public/admin/home.svg";
 import PageIcon from "../../../../public/admin/page.svg";
@@ -17,13 +18,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Dashboard from '../dashboard';
 import Loader from "../loader";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import Vendor from "../vendor";
-// import protectedRoute from "@/components/Utils/protectedRoute";
-// import { destroyCookie } from "nookies";
-// import { useAuth } from "@/components/Utils/AuthContext";
+import Vendors from "../vendors/vendors";
 
+// import protectedRoute from "@/components/Utils/protectedRoute";
+// import { destroyCookie } from "cookies";
+// import { useAuth } from "@/components/Utils/AuthContext";
+import { removeToken,rem_AdDetails } from "@/redux/adminSlice/authSlice";
 
 
 const SideMenu = () => {
@@ -35,7 +38,9 @@ const SideMenu = () => {
   const router = useRouter();
   // const token = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("token" || "")) : "";
   const [isLoading, setIsLoading] = useState(false);
-//   const { adminAuthToken } = useAuth()
+  // const { adminAuthToken } = useAuth();
+  const dispatch = useDispatch();
+  const adminAuthToken = useSelector((state) => state.auth?.token);
   const menu = [
     {
       id: 1,
@@ -60,6 +65,12 @@ const SideMenu = () => {
       label: "Vendor",
       component:<Vendor/> ,
       icon: Users,
+    },
+    {
+      id: 5,
+      label: "Vendors",
+      component:<Vendors/> ,
+      icon: Users,
     }
   ];
 
@@ -68,60 +79,45 @@ const SideMenu = () => {
     setShowDrawer(false);
   };
 
-//   const handleSignout = () => {
-    
+  const handleSignout = async () => {
+    try {
+      const res = await axios.get(`/api/auth/adminLogout`, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(res);
+      if (res?.data?.success) {
+        toast.success("Logout successfully !");
+        dispatch(removeToken());
+        dispatch(rem_AdDetails());
+        router.push("/admin");
+      } else {
+        dispatch(removeToken());
+        dispatch(rem_AdDetails());
+        router.push("/admin");
+        toast.error("Logout failed try again !");
+      }
+    } catch (error) {
+      dispatch(removeToken());
+      dispatch(rem_AdDetails());
+      router.push("/admin");
+      console.error("Error occurred:", error);
+      toast.error(error?.response?.data?.error || "Invalid token !");
+    }
+  };
 
-//     setIsLoading(true);
+  // useEffect(() => {
+  //   // const storedToken = localStorage.getItem("token" || "");
 
-
-
-//     const options = {
-//       method: "GET",
-//       url: `/api/auth/logoutAdmin`,
-//       headers: {
-//         Authorization: `Bearer ${adminAuthToken}`,
-//         "Content-Type": "application/json",
-//       },
-//     };
-//     axios
-//       .request(options)
-//       .then((response) => {
-//         console.log(response?.data);
-//         if (response.status === 200) {
-//           setIsLoading(false);
-//           // localStorage.removeItem("token");
-//           destroyCookie(null, "ad_Auth", { path: "/" });
-//           // localStorage.removeItem("userID");
-//           router.push("/admin");
-//         } else {
-//           setIsLoading(false);
-//           toast.warn("Something went wrong!")
-//           destroyCookie(null, "ad_Auth", { path: "/" });
-//           router.push("/admin")
-
-//           // localStorage.removeItem("token")
-//           return;
-//         }
-//       })
-//       .catch((error) => {
-//         setIsLoading(false);
-//         router.push("/admin")
-//         // localStorage.removeItem("token")
-//         destroyCookie(null, "ad_Auth", { path: "/" });
-//         console.error("Error:", error);
-//       });
-//   };
-
-//   useEffect(() => {
-//     // const storedToken = localStorage.getItem("token" || "");
-
-//     if (adminAuthToken) {
-//       verify();
-//     } else {
-//       setAuthenticated(false);
-//       router.push("/admin");
-//     }
-//   }, []);
+  //   if (adminAuthToken) {
+  //     verify();
+  //   } else {
+  //     setAuthenticated(false);
+  //     router.push("/admin");
+  //   }
+  // }, []);
 
   const verify = async () => {
     setIsLoading(true);
@@ -151,6 +147,7 @@ const SideMenu = () => {
   };
   return (
     <>
+      <ToastContainer autoClose={2000}/>
       {isLoading && <Loader />}
       <section className="">
         <div className="flex min-h-screen relative lg:static">
@@ -218,14 +215,14 @@ const SideMenu = () => {
                 <div className="bg-[white] h-[1px] w-[77%] lg:w-[80%] 2xl:w-[83%] mx-auto my-[40px]"></div>
                 <div
                   className={` pl-1 py-3 mx-5 rounded text-center cursor-pointer my-3 flex items-center transition-colors dash-menu gap-x-3  font-semibold hover:bg-[#b8bbdf47] hover:text-[white] hover:rounded-md }`}
-                //   onClick={handleSignout}
+                  onClick={handleSignout}
                 >
                   {/* <LogoutIcon/> */}
                   <Image className='w-6' src={signout} alt='signout' />
                   <div>
-                  <Link href='/admin'>
+                 
                     <p>Sign Out</p>
-                    </Link>
+                  
                   </div>
                 </div>
               </div>

@@ -55,52 +55,51 @@ const Dashboard = () => {
       value: 29975,
     },
   ];
-  const vorders=[
+  const vorders = [
     {
-      id:1,
-      name:"Chandani cloth",
-      order:333
+      id: 1,
+      name: "Chandani cloth",
+      order: 333,
     },
     {
-      id:2,
-      name:"D P Collection",
-      order:456
+      id: 2,
+      name: "D P Collection",
+      order: 456,
     },
     {
-      id:3,
-      name:"VC Fashion",
-      order:943
+      id: 3,
+      name: "VC Fashion",
+      order: 943,
     },
     {
-      id:1,
-      name:"Paridhan Collection",
-      order:23
+      id: 1,
+      name: "Paridhan Collection",
+      order: 23,
     },
     {
-      id:1,
-      name:"Kiran",
-      order:383
+      id: 1,
+      name: "Kiran",
+      order: 383,
     },
     {
-      id:1,
-      name:"Prashant trends",
-      order:56
+      id: 1,
+      name: "Prashant trends",
+      order: 56,
     },
     {
-      id:1,
-      name:"Vintage Cloths",
-      order:321
-    },{
-      id:1,
-      name:"Beauty Cloths",
-      order:789
+      id: 1,
+      name: "Vintage Cloths",
+      order: 321,
     },
-
-  ]
+    {
+      id: 1,
+      name: "Beauty Cloths",
+      order: 789,
+    },
+  ];
 
   return (
     <>
-    
       <section>
         <div className="w-[1000px] 2xl:w-[1300px] mx-auto">
           <div className="font-bold text-[30px] 2xl:text-[35px] my-9">
@@ -111,7 +110,9 @@ const Dashboard = () => {
             {/* ---------todays sale--------- */}
             <div className="bg-white  p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Today Sales</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Today Sales
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon1} alt="image" />
               </div>
               <p>68</p>
@@ -119,7 +120,9 @@ const Dashboard = () => {
             {/* ---------last 7 day sale sale--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Last 7 Days Sales</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Last 7 Days Sales
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon2} alt="image" />
               </div>
               <p>278</p>
@@ -127,7 +130,9 @@ const Dashboard = () => {
             {/* ---------last 30  day sale--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Last 30 Days Sales</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Last 30 Days Sales
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon3} alt="image" />
               </div>
               <p>1,334</p>
@@ -135,7 +140,9 @@ const Dashboard = () => {
             {/* ---------last 180  day sale--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Last 180 Days Sales</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Last 180 Days Sales
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon4} alt="image" />
               </div>
               <p>8,177</p>
@@ -143,7 +150,9 @@ const Dashboard = () => {
             {/* ---------total products--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Total Products</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Total Products
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon1} alt="image" />
               </div>
               <p>945</p>
@@ -151,7 +160,9 @@ const Dashboard = () => {
             {/* ---------avaliable stocks--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Available Stock</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Available Stock
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon2} alt="image" />
               </div>
               <p>8,885</p>
@@ -159,7 +170,9 @@ const Dashboard = () => {
             {/* ---------stock Value--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Stock Value</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Stock Value
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon3} alt="image" />
               </div>
               <p>8,410,294</p>
@@ -167,7 +180,9 @@ const Dashboard = () => {
             {/* ---------Order Received--------- */}
             <div className="bg-white p-5 rounded-md">
               <div className="flex items-start justify-between ">
-                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">Order Received</p>
+                <p className="text-neutral-500 xl:text-[14px] 2xl:text-[18px]">
+                  Order Received
+                </p>
                 <Image className="w-7 2xl:w-10" src={icon4} alt="image" />
               </div>
               <p>576</p>
@@ -193,8 +208,12 @@ const Dashboard = () => {
                     <p className="text-[13px] 2xl:text-[14px] font-semibold text-center">
                       {item.title}
                     </p>
-                    <p className="text-gray-600 mb-2 text-[14px] 2xl:text-[16px]">Order: {item.order}</p>
-                    <p className="text-gray-600 mb-2 text-[14px] 2xl:text-[16px]">Price: ${item.value}</p>
+                    <p className="text-gray-600 mb-2 text-[14px] 2xl:text-[16px]">
+                      Order: {item.order}
+                    </p>
+                    <p className="text-gray-600 mb-2 text-[14px] 2xl:text-[16px]">
+                      Price: ${item.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -206,36 +225,38 @@ const Dashboard = () => {
               Vendor Orders
             </p>
             <div className="bg-white p-10">
-            <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr className="bg-white">
-            <th className="border text-start px-1">ID</th>
-            <th className="border text-start p-2">Name</th>
-            <th className="border text-start p-2">Order</th>
-            <th className="border text-start p-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vorders.map((order) => (
-            <tr key={order.id} className="bg-gray-100">
-              <td className="border p-2">{order.id}</td>
-              <td className="border p-2">{order.name}</td>
-              <td className="border p-2 text-center ">{order.order}</td>
-              <td className="border p-2 text-center">
-              <button
-                  // onClick={() => onActionClick(order.id)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                >
-                  View Orders
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-300">
+                  <thead>
+                    <tr className="bg-white">
+                      <th className="border text-start px-1">ID</th>
+                      <th className="border text-start p-2">Name</th>
+                      <th className="border text-start p-2">Order</th>
+                      <th className="border text-start p-2">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vorders.map((order) => (
+                      <tr key={order.id} className="bg-gray-100">
+                        <td className="border p-2">{order.id}</td>
+                        <td className="border p-2">{order.name}</td>
+                        <td className="border p-2 text-center ">
+                          {order.order}
+                        </td>
+                        <td className="border p-2 text-center">
+                          <button
+                            // onClick={() => onActionClick(order.id)}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                          >
+                            View Orders
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>
