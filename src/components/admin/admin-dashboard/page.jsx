@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import Dashboard from '../dashboard';
 import Loader from "../loader";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Link from "next/link";
 import Vendor from "../vendor";
 import Vendors from "../vendors/vendors";
@@ -27,6 +28,7 @@ import Vendors from "../vendors/vendors";
 // import { destroyCookie } from "cookies";
 // import { useAuth } from "@/components/Utils/AuthContext";
 import { removeToken,rem_AdDetails } from "@/redux/adminSlice/authSlice";
+import Products from "../product/products";
 
 
 const SideMenu = () => {
@@ -62,12 +64,18 @@ const SideMenu = () => {
     },
     {
       id: 4,
-      label: "Vendor",
-      component:<Vendor/> ,
-      icon: Users,
+      label: "Products",
+      component:<Products/> ,
+      icon: webIcon,
     },
+    // {
+    //   id: 5,
+    //   label: "Vendor",
+    //   component:<Vendor/> ,
+    //   icon: Users,
+    // },
     {
-      id: 5,
+      id: 6,
       label: "Vendors",
       component:<Vendors/> ,
       icon: Users,
@@ -119,32 +127,32 @@ const SideMenu = () => {
   //   }
   // }, []);
 
-  const verify = async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.get(`/api/auth/verifyTokenUser/${adminAuthToken}`);
-      if (res?.data?.data === null) {
-        router.push("/admin")
-        destroyCookie(null, "ad_Auth", { path: "/" });
-      }
-      if (res.status === 200) {
-        setAuthenticated(true);
-        setIsLoading(false);
-        return;
-      } else {
-        setAuthenticated(false);
-        destroyCookie(null, "ad_Auth", { path: "/" });
-        router.push("/admin");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setAuthenticated(false);
-      console.error("Error occurred:", error);
-      destroyCookie(null, "ad_Auth", { path: "/" });
-      router.push("/admin");
-      setIsLoading(false);
-    }
-  };
+  // const verify = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await axios.get(`/api/auth/verifyAdminToken/${adminAuthToken}`);
+  //     if (res?.data?.data === null) {
+  //       router.push("/admin")
+  //       destroyCookie(null, "ad_Auth", { path: "/" });
+  //     }
+  //     if (res.status === 200) {
+  //       setAuthenticated(true);
+  //       setIsLoading(false);
+  //       return;
+  //     } else {
+  //       setAuthenticated(false);
+  //       destroyCookie(null, "ad_Auth", { path: "/" });
+  //       router.push("/admin");
+  //       setIsLoading(false);
+  //     }
+  //   } catch (error) {
+  //     setAuthenticated(false);
+  //     console.error("Error occurred:", error);
+  //     destroyCookie(null, "ad_Auth", { path: "/" });
+  //     router.push("/admin");
+  //     setIsLoading(false);
+  //   }
+  // };
   return (
     <>
       <ToastContainer autoClose={2000}/>

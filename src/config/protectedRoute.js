@@ -37,7 +37,7 @@ const protectedRoute = (WrappedComponent) => {
       setIsAuth(false);
       try {
         const res = await axios.get(
-          `/api/auth/verifyUserToken/${adminAuthToken}`
+          `/api/auth/verifyAdminToken/${adminAuthToken}`
         );
         if (res?.data?.data === null) {
           router.push("/admin");
