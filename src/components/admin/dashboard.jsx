@@ -100,12 +100,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <div className='p-10 flex flex-col justify-center items-center'>
-  <h1 className='text-[15px] sm:text-[30px]'>Welcome to Admin Dashboard !</h1>
-  <div className='flex justify-center items-center'>
-<Image src={dashboard} alt='image'/>
-    </div>
-    </div> */}
+    
       <section>
         <div className="w-[1000px] 2xl:w-[1300px] mx-auto">
           <div className="font-bold text-[30px] 2xl:text-[35px] my-9">
