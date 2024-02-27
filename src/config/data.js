@@ -1,6 +1,7 @@
 import DealerDashboard from "@/components/dealer-dashboard/dashboard/dashboard-pages/DealerDashboard";
 import ProductList from "@/components/dealer-dashboard/dashboard/dashboard-pages/products/ProductList";
 import Reviews from "@/components/dealer-dashboard/dashboard/dashboard-pages/reviews/Reviews";
+import Setting from "@/components/dealer-dashboard/dashboard/dashboard-pages/setting/Setting";
 import Orders from "@/components/dealer-dashboard/dashboard/dashboard-pages/total-orders/Orders";
 
 export const sideMenus = [
@@ -31,7 +32,7 @@ export const sideMenus = [
     {
       id: 5,
       label: "Settings",
-    //   component: <AppForm />,
+      component: <Setting />,
     //   icon: webIcon,
     },
     {

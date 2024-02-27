@@ -31,7 +31,7 @@ const ProductList = () => {
   return (
     <>
       <section>
-        <div className="container mx-auto px-[70px] ">
+        <div className="container mx-auto xl:px-[70px] sm:px-[20px] px-[20px]">
           {/* <div
             className="relative h-56 rounded-b-lg bg-cover bg-center bg-no-repeat shadow-lg"
           >
@@ -47,10 +47,10 @@ const ProductList = () => {
             </div>
           </div> */}
 
-          <div className="bg-[#f3f3f3] flex flex-col items-start justify-center space-y-4 py-8 px-4 sm:flex-row sm:space-y-0 md:justify-between lg:px-0">
+          <div className="bg-[#f3f3f3] flex flex-col items-start justify-center space-y-4 py-8 sm:flex-row sm:space-y-0 md:justify-between ">
             <div className="max-w-lg">
               <h1 className="text-2xl font-bold text-gray-800">All products</h1>
-              <p className="mt-2 text-gray-600">
+              <p className="mt-2 text-gray-600 text-[15px]">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Explicabo, alias. Quas necessitatibus exercitationem
                 praesentium.
@@ -63,7 +63,7 @@ const ProductList = () => {
             </div>
           </div>
 
-          <main className="grid grid-cols-2 gap-x-6 gap-y-10 px-2 pb-20 sm:grid-cols-3 sm:px-8 lg:mt-8  lg:grid-cols-4 lg:gap-x-4 lg:px-0">
+          <main className="grid sm:grid-cols-2 gap-x-6 gap-y-10 px-2 pb-20 md:grid-cols-3 sm:px-8 lg:mt-8  xl:grid-cols-4 lg:gap-x-4 lg:px-0">
             {dummyProducts.map((items, index) => {
               return (
                 <article className="relative bg-white  px-3 py-2 rounded">
