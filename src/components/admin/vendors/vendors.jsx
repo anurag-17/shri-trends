@@ -264,7 +264,7 @@ const Vendors = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[500px] transform overflow-hidden rounded-2xl bg-white sm:py-6 p-4  sm:px-8 lg:px-8 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[500px] transform overflow-hidden rounded-2xl bg-white sm:py-10 p-4  sm:px-8 lg:px-10 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end">
                     <button onClick={closeDrawer}>
                     <Image className="w-8"  src={cross} alt="close"/>
@@ -311,7 +311,7 @@ const Vendors = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[500px]  transform overflow-hidden rounded-2xl bg-white p-4  sm:px-8 lg:px-8 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[500px]  transform overflow-hidden rounded-2xl bg-white p-4  sm:px-8 lg:px-10 py-8 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end">
                     <button 
                     onClick={closeDrawerO}

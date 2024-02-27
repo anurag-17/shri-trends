@@ -42,16 +42,9 @@ const AddVendors = ({closeDrawer,refreshData}) => {
   return (
     <>
            <div
-        className="flex justify-center items-center border border-[#f3f3f3] rounded-lg bg-white
-      2xl:px-5  2xl:h-[50px] 2xl:my-5
-      xl:px-4  xl:h-[40px] xl:my-4
-      lg:px-3  lg:h-[35px] lg:my-2
-      md:px-2  md:h-[30px] md:my-2
-      sm:px-1 sm:h-[25px] sm:my-2
-      px-1 h-[25px] my-2
-       "
+        className=" flex justify-center  mb-3"
       >
-        <h2 className="custom_heading_text font-semibold  ">
+        <h2 className="custom_heading_text font-semibold  text-[24px]">
           Add New Vendor
         </h2>
        
@@ -59,7 +52,7 @@ const AddVendors = ({closeDrawer,refreshData}) => {
 
       <form
         // onSubmit={handleSubmit}
-        className=" bg-white border  rounded-lg 2xl:p-2 xl:p-2  lg:p-1 md:p-2 p-1  mx-auto"
+        className=" bg-white border  rounded-lg 2xl:p-6 xl:p-2  lg:p-1 md:p-2 p-1  mx-auto"
       >
         <div className="">
           <label

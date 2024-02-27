@@ -103,3 +103,12 @@
     sm:px-2 sm:py-0 
       px-2 pb-0 h-[24px] ;
 }
+.custom_input_label {
+  @apply absolute bg-white z-20 text-gray-800
+  2xl:text-[18px] 2xl:mt-6 2xl:ml-14
+  xl:text-[14px] xl:mt-2 xl:ml-8
+  lg:text-[12px] lg:mt-[10px] lg:ml-[26px]
+  md:text-[10px] md:mt-2 md:ml-6
+  sm:text-[10px] sm:mt-1 sm:ml-5
+  text-[10px] ml-4;
+}
