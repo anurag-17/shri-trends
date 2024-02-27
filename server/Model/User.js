@@ -11,11 +11,17 @@ const UserSchema = new mongoose.Schema(
     lastname: {
       type: String,
     },
+    userName: {
+      type: String,
+    },
     email: {
       type: String,
       unique: true,
     },
     mobile: {
+      type: String,
+    },
+    altNumber: {
       type: String,
     },
     password: {
@@ -35,6 +41,12 @@ const UserSchema = new mongoose.Schema(
     isVerified: {
       type: Boolean,
       default: false,
+    },
+    gstNo: {
+      type: String
+    },
+    companyName: {
+      type: String
     },
     passwordChangedAt: Date,
     passwordResetToken: String,

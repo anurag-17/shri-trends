@@ -42,6 +42,10 @@ exports.register = async (req, res, next) => {
     // provider: req.body.provider,
     role: req.body.role,
     address: req.body.address,
+    userName: req.body.userName,
+    altNumber: req.body.altNumber,
+    gstNo: req.body.gstNo,
+    companyName: req.body.companyName
   };
 
   if (password) {
