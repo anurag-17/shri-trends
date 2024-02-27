@@ -40,7 +40,7 @@ exports.register = async (req, res, next) => {
     lastname: req.body.lastname,
     mobile: req.body.mobile,
     // provider: req.body.provider,
-    // role: req.body.role
+    role: req.body.role,
     address: req.body.address,
   };
 
