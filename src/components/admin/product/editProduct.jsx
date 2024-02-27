@@ -88,9 +88,11 @@ const EditProduct = ({ closeEditModal, refreshData, editData }) => {
           <div className="mt-2">
             <label className="custom_input_label">Size</label>
             <input
-              defaultValue={
-                editData?.size ? editData?.size : productDetail?.size
-              }
+    defaultValue={
+      editData?.stocks && editData.stocks.length > 0
+        ? editData.stocks[0].size
+        : ""
+    }
               type="text"
               name="size"
               className="custom_inputt capitalize"
@@ -101,11 +103,11 @@ const EditProduct = ({ closeEditModal, refreshData, editData }) => {
           <div className="mt-2">
             <label className="custom_input_label">Quantity</label>
             <input
-              defaultValue={
-                editData?.quantity
-                  ? editData?.quantity
-                  : productDetail?.quantity
-              }
+    defaultValue={
+      editData?.stocks && editData.stocks.length > 0
+        ? editData.stocks[0].quantity
+        : ""
+    }
               type="text"
               name="name"
               className="custom_inputt capitalize"
