@@ -99,7 +99,7 @@ const AddProduct = ({closeDrawer,refreshData}) => {
             required
             type="text"
             name="title"
-            className="custom_inputt"
+            className="custom_inputt text-[18px]"
             onChange={inputHandler}
           />
         </div>
