@@ -9,6 +9,17 @@ import AddProduct from "./addProduct";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import EditProduct from "./editProduct";
+import Pagination from "@/config/Pagination";
+export const headItems = [
+  "S. No.",
+  "Title",
+  " Description",
+  " Image",
+  "Price",
+  "Size",
+  "Quantity",
+  "Action",
+];
 
 const Products = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -19,8 +30,8 @@ const Products = () => {
   const [dialogMatch, setDialogMatch] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [editData, setEditData] = useState([]);
-  const [editProduct, setProduct] = useState();
-
+  // const [editProduct, setProduct] = useState();
+  const visiblePageCount = 10;
   const [productID, setProductId] = useState();
   const adminAuthToken = useSelector((state) => state?.auth.token);
 
@@ -39,21 +50,21 @@ const Products = () => {
   };
 
   useEffect(() => {
-    defaultProduct();
+    defaultProduct(1);
   }, [isRefresh]);
 
-  const defaultProduct = () => {
+  const defaultProduct = (pageNo) => {
     // setLoader(true);
 
     const option = {
       method: "GET",
-      url: "/api/product/getAllProduct",
+      url: `/api/product/getAllProduct?page=${pageNo}&limit=${visiblePageCount}`,
     };
     axios
       .request(option)
       .then((response) => {
         setGetProduct(response?.data?.products);
-        console.log(response?.data, "ress");
+       
         // setEditData(response?.data);
         // setLoader(false);
       })
@@ -82,7 +93,7 @@ const Products = () => {
           toast.success("Deleted successfully !");
           setLoading(false);
           refreshData();
-          setDialogMatch(false); // Close the dialog after successful deletion
+          setDialogMatch(false); 
         } else {
           setLoading(false);
           toast.error("Failed. Something went wrong!");
@@ -144,75 +155,95 @@ const Products = () => {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300 table-auto">
-            <thead>
-              <tr className="bg-white">
-                <th className="border text-start px-4">S.No.</th>
-                <th className="border text-start p-2">Title</th>
-                <th className="border text-start p-2">Description</th>
-                <th className="border text-center p-2">Image</th>
-                <th className="border text-center p-2">Price</th>
-                <th className="border text-center p-2">Size</th>
-                <th className="border text-center p-2">Quantity</th>
-                <th className="border text-center p-2">Action</th>
 
-                {/* Uncomment the line below if you want to include the Value column */}
-                {/* <th className="border text-center p-2">Value</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(getProduct) &&
-                getProduct.map((product, index) => (
-                  <tr key={product.id} className="bg-white">
-                    <td className="border px-4  ">{index + 1}</td>
-                    <td className="border p-2">{product.title}</td>
-                    <td className="border p-2">{product.description}</td>
-                    <td className="border p-2 text-center">
-                      {/* {product.images.length > 0 && (
+
+         
+        <div className="rounded-[10px] bg-white 2xl:py-[30px] 2xl:px-[20px] flex justify-between items-center mt-[20px] 2xl:p-6 overflow-x-scroll">
+            <table className="w-full min-w-[640px] table-auto mt-[20px] ">
+              <thead className="">
+                <tr className="border-b ">
+                  {headItems.map((items, inx) => (
+                    <th className="py-3 px-5 text-left bg-white" key={inx}>
+                      <p className="block text-[13px] font-medium uppercase text-[#72727b]">
+                        {" "}
+                        {items}
+                      </p>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              {Array.isArray(getProduct) && getProduct.length > 0 && (
+                <tbody>
+                  {getProduct.map((product, index) => (
+                    <tr key={index} className="border-b">
+                      <td className="text-[14px] font-[400] py-3 px-5">
+                        {index + 1}
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5">
+                      {product.title}
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
+                      {product.description}
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5">
+                        {/* {product.images.length > 0 && (
         <Image
           className="w-16 flex mx-auto"
           src={product.images[0].url[0]}
           alt={product.title} width={50} height={50}
         />
       )} */}
-                    </td>
-                    <td className="border p-2 text-center">{product.price}</td>
-                    <td className="border p-2 text-center">
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5">
+                      {product.price}
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
                       {product.stocks?.[0]?.size}
-                    </td>
-                    <td className="border p-2 text-center">
+                      </td>
+                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
                       {product.stocks?.[0]?.quantity}
-                    </td>
-
-                    <td className="border w-52 px-2">
-                      <div className="flex justify-between">
-                        <div>
+                      </td>
+                      
+                      <td className="text-[14px] font-[400] py-3 px-5">
+                        <div className="flex flex-col md:flex-row items-center gap-x-5">
                           <button
+                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
                             onClick={() => openModall(product?._id)}
-                            className="border border-blue-500 text-[18px] px-4 rounded-lg text-blue-500 hover:text-blue-700 hover:border-blue-700"
                           >
                             Edit
                           </button>
-                        </div>
-                        <div>
                           <button
+                            className="px-4 text-[13px] border rounded h-[25px] text-[red] hover:bg-[#efb3b38a]"
                             onClick={() => {
                               setDialogMatch(true);
                               setDeleteId(product?._id);
                             }}
-                            className="border border-red-400 text-[18px] px-4 rounded-lg text-red-400 hover:border-red-700 hover:text-red-600"
                           >
                             Delete
                           </button>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          </div>
+
+      {getProduct?.pagination?.totalPages > 1 && (
+        <Pagination
+          currentPage={getProduct?.pagination?.currentPage}
+          totalCount={getProduct?.pagination?.totalPages}
+          visiblePageCount={visiblePageCount}
+        />
+      )}
+
+
+
+
+
+
+    
       </div>
 
       {/* -----------------add product--------------- */}
@@ -241,7 +272,7 @@ const Products = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[1000px] transform overflow-hidden rounded-2xl bg-white sm:py-10 p-4  sm:px-8 lg:px-10 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[700px] transform overflow-hidden rounded-2xl bg-white sm:py-10 p-4  sm:px-8 lg:px-10 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end">
                     <button onClick={closeDrawer}>
                       <Image className="w-8" src={cross} alt="close" />
@@ -379,7 +410,7 @@ const Products = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className=" w-full max-w-[540px] xl:max-w-[700px] 2xl:max-w-[900px] transform overflow-hidden rounded-2xl bg-white p-5 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className=" w-full max-w-[540px] xl:max-w-[700px] 2xl:max-w-[800px] transform overflow-hidden rounded-2xl bg-white p-5 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="flex justify-end lg:text-[20px] text-[16px] font-semibold leading-6 text-gray-900"

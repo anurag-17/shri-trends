@@ -9,6 +9,12 @@ import VideoPopup from "./modals/VideoPopup";
 import Pagination from "@/config/Pagination";
 import CloseIcon from "@/components/svg/CloseIcon";
 import Loader from "@/config/Loader";
+import cross from "../../../../public/admin/cross.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
+import EditDealer from "./editDealer";
+import PreviewDealer from "./previewDealer";
 
 export const headItems = [
   "S. No.",
@@ -24,12 +30,17 @@ export const headItems = [
 const Dealer = () => {
 
     let [allData, setAllData] = useState([])
-    let [openDelete, setOpenDelete] = useState(false)
+ 
     let [isLoader, setLoader] = useState(false)
-    let [updateId, setUpdateId] = useState("")
+    const [isDrawerOpenO, setIsDrawerOpenO] = useState(false);
+    const [isDrawerOpen1, setIsDrawerOpen1] = useState(false);
     const [isRefresh, setRefresh] = useState(false);
     const [searchText, setSearchText] = useState("");
-    const visiblePageCount = 10
+    const [dialogMatch, setDialogMatch] = useState(false);
+    const [dialogPreview,setDialogPreview]=useState(false)
+    const [deleteId, setDeleteId] = useState("");
+    const [editData, setEditData] = useState([]);
+    const visiblePageCount = 10;
     const adminAuthToken = useSelector((state) => state.auth?.token);
   
     useEffect(() => {
@@ -65,18 +76,23 @@ const Dealer = () => {
         });
     };
   
-    const handleDelete = (id) => {
-      setUpdateId(id)
-      setOpenDelete(true)
-    }
+    // const handleDelete = (id) => {
+    //   setUpdateId(id)
+    //   setOpenDelete(true)
+    // }
   
-    const closeDeleteModal = () => {
-      setOpenDelete(false)
-    }
+    
   
     const refreshdata = () => {
       setRefresh(!isRefresh)
     }
+
+    const closePreviewModal=()=>{
+      setIsDrawerOpen1(false);
+    }
+    const closeEditModal = () => {
+      setIsDrawerOpenO(false);
+    };
   
   
     const handleSearchInput = (e) => {
@@ -118,6 +134,7 @@ const Dealer = () => {
           console.log(response?.data);
           if (response.status === 200) {
             setAllData(response?.data);
+            setDialogMatch(false);
           } else {
             return;
           }
@@ -126,10 +143,90 @@ const Dealer = () => {
           console.error("Error:", error);
         });
     };
+
+     // =------------get single user---------
+     const getUserDetailsById = async (id) => {
+      try {
+        const options = {
+          method: "GET",
+          url: `/api/auth/getUserById/${id}`,
+          headers: {
+            Accept: "application/json",
+            authorization: adminAuthToken,
+          },
+        };
+        const response = await axios.request(options);
+        if (response.status === 200) {
+          return response.data.user;
+        } else {
+          console.error("Error: Unexpected response status");
+          return null;
+        }
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    };
+  const openModall = async (id) => {
+    try {
+      const user = await getUserDetailsById(id);
+      if (user) {
+        setEditData(user);
+        setIsDrawerOpenO(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const previewUser = async (id) => {
+    try {
+      const user = await getUserDetailsById(id);
+      if (user) {
+        setEditData(user);
+        setDialogPreview(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    // ---------delete api-------------
+    const handleDelete = (userID) => {
+      setLoader(true);
+      const options = {
+        method: "DELETE",
+        url: `/api/auth/deleteaUser/${userID}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: adminAuthToken,
+        },
+      };
+  
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response);
+          if (response.status === 200) {
+            toast.success("Deleted successfully !");
+            setLoader(false);
+            refreshdata();
+            setDialogMatch(false); 
+          } else {
+            setLoader(false);
+            toast.error("Failed. Something went wrong!");
+          }
+        })
+        .catch(function (error) {
+          setLoader(false);
+          console.error(error);
+          toast.error("Failed. Something went wrong!");
+        });
+    };
   
   
     return (
       <>
+  <ToastContainer/>
         {
           isLoader && <Loader />
         }
@@ -184,16 +281,29 @@ const Dealer = () => {
                     allData?.users?.map((items, index) => (
                       <tr key={index}>
                         <td className="text-[14px] font-[400] py-3 px-5">{index + 1}</td>
-                        <td className="text-[14px] font-[400] py-3 px-5 capitalize">{items?.name}</td>
+                        <td className="text-[14px] font-[400] py-3 px-5 capitalize">{items?.firstname}</td>
                         <td className="text-[14px] font-[400] py-3 px-5">{items?.email}</td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.contact} </td>
+                        <td className="text-[14px] font-[400] py-3 px-5">{items?.mobile} </td>
                         <td className="text-[14px] font-[400] py-3 px-5">{items?.companyName} </td>
                         <td className="text-[14px] font-[400] py-3 px-5">{items?.gstNo} </td>
                         <td className="text-[14px] font-[400] py-3 px-5">{items?.address} </td>
                         <td className="text-[14px] font-[400] py-3 px-5">
                           <div className="flex flex-col md:flex-row items-center gap-x-5">
+                          <button
+                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
+                            onClick={() => previewUser(items?._id)}
+                          >
+                            Preview
+                          </button>
+                          <button
+                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
+                            onClick={() => openModall(items?._id)}
+                          >
+                            Edit
+                          </button>
                             <button className="px-4 text-[13px] border rounded h-[25px] text-[red] hover:bg-[#efb3b38a]"
-                              onClick={() => handleDelete(items?._id)}
+                              onClick={() => {setDeleteId(items?._id);
+                                setDialogMatch(true)}}
                             >Delete</button>
                           </div>
                         </td>
@@ -226,48 +336,262 @@ const Dealer = () => {
           )}
   
         </section>
+
+        {/* ---------Edit Popup--------------- */}
+        <Transition appear show={isDrawerOpenO} as={Fragment}>
+        <Dialog as="div" className="z-10 fixed" onClose={() => {}}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className=" w-full max-w-[540px] xl:max-w-[700px] 2xl:max-w-[800px] transform overflow-hidden rounded-2xl bg-white p-5 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="flex justify-end lg:text-[20px] text-[16px] font-semibold leading-6 text-gray-900"
+                  >
+                    {" "}
+                    <button
+                      type="button"
+                      onClick={closeEditModal}
+                      className=" text-gray-400  shadow-2xl text-sm   top-2  inline-flex items-center justify-center "
+                    >
+                      <Image
+                        src={cross}
+                        className="w-7 md:w-7 lg:w-8 xl:w-9 2xl:w-14"
+                      />
+                      <span className="sr-only bg-black">Close menu</span>
+                    </button>
+                  </Dialog.Title>
+                  <EditDealer
+                   
+                    closeEditModal={closeEditModal}
+                    refreshData={refreshdata}
+                    editData={editData}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
   
         {/*---------- Delete popup---------- */}
-  
-        <Transition appear show={openDelete} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
-  
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-[500px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title
-                      as="h3"
-                      className="xl:text-[20px] text-[18px] font-medium leading-6 text-gray-900"
+        <Transition appear show={dialogMatch} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={() => {}}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className=" w-full max-w-[500px] transform overflow-hidden rounded-2xl bg-white py-10 px-12 text-left align-middle shadow-2xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="flex justify-center lg:text-[20px] text-[16px] font-semibold leading-6 text-gray-900"
+                  >
+                  
+                    Are You Sure! Want to Delete?
+                  </Dialog.Title>
+
+                  <div className="mt-2">
+                    <p className="text-[12px] sm:text-[16px] font-normal ms:leading-[30px] text-gray-500 mt-4">
+                      Do you really want to delete these records? You can not
+                      view this in your list anymore if you delete!
+                    </p>
+                  </div>
+
+                  <div className=" mt-4 lg:mt-8">
+                    <div className="flex justify-between gap-x-5">
+                      <button
+                        className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3
+                              hover:border-none  border-sky-400 text-sky-700 hover:bg-sky-200 custom_btn_d "
+                        onClick={() => {
+                          setDialogMatch(false);
+                        }}
+                      >
+                        No, Keep It
+                      </button>
+
+                      <button
+                        className={`w-full  rounded-md 
+            custom_btn_d 
+                              border-red-400 text-red-700 bg-red-200  
+                              hover:border-none
+                        ${isLoader ? "bg-gray-200" : "hover:bg-red-200"}
+                        hover:border-none`}
+                        onClick={() => handleDelete(deleteId)}
+                        disabled={isLoader}
+                      >
+                        {isLoader ? "Deleting..." : "Yes, Delete It"}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* <div className="mt-3 flex justify-center gap-14">
+                    <button
+                      className="px-5 py-1 rounded-lg border border-[green] text-[green]"
+                      onClick={() => handleDelete(deleteId)}
                     >
-                      Delete user
-                    </Dialog.Title>
-                    <DeletePage closeModal={closeDeleteModal} refreshdata={refreshdata} deleteId={updateId} />
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
+                      Yes
+                    </button>
+                    <button
+                      className="px-5 py-1 rounded-lg border border-[red] text-[red]"
+                      onClick={() => {
+                        setDialogMatch(false);
+                      }}
+                    >
+                      No
+                    </button>
+                  </div> */}
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
-          </Dialog>
-        </Transition>
+          </div>
+        </Dialog>
+      </Transition>
+   {/* ---------Prewiew Popup--------------- */}
+   <Transition appear show={dialogPreview} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={() => {}}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className=" w-full max-w-[1300px] transform overflow-hidden rounded-2xl bg-white py-5 px-12 text-left align-middle shadow-2xl transition-all">
+                  <div className="flex justify-end"> <button
+                      type="button"
+                      onClick={()=>setDialogPreview(false)}
+                      className=" text-gray-400  shadow-2xl text-sm   top-2  inline-flex items-center justify-center "
+                    >
+                      <Image
+                        src={cross}
+                        className="w-7 md:w-7 lg:w-8 xl:w-9 2xl:w-12"
+                      />
+                      <span className="sr-only bg-black">Close menu</span>
+                    </button>
+                    </div>
+                  <Dialog.Title
+                    as="h3"
+                    className="flex justify-center lg:text-[30px] text-[20px] font-semibold leading-6 text-gray-900"
+                  >
+                    User Details
+                  </Dialog.Title>
+                  <PreviewDealer
+                     editData={editData}
+                  />
+
+                  {/* <div className="mt-2">
+                    <p className="text-[12px] sm:text-[16px] font-normal ms:leading-[30px] text-gray-500 mt-4">
+                      Do you really want to delete these records? You can not
+                      view this in your list anymore if you delete!
+                    </p>
+                  </div> */}
+{/* 
+                  <div className=" mt-4 lg:mt-8">
+                    <div className="flex justify-between gap-x-5">
+                      <button
+                        className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3
+                              hover:border-none  border-sky-400 text-sky-700 hover:bg-sky-200 custom_btn_d "
+                        onClick={() => {
+                          setDialogMatch(false);
+                        }}
+                      >
+                        No, Keep It
+                      </button>
+
+                      <button
+                        className={`w-full  rounded-md 
+            custom_btn_d 
+                              border-red-400 text-red-700 bg-red-200  
+                              hover:border-none
+                        ${isLoader ? "bg-gray-200" : "hover:bg-red-200"}
+                        hover:border-none`}
+                        onClick={() => handleDelete(deleteId)}
+                        disabled={isLoader}
+                      >
+                        {isLoader ? "Deleting..." : "Yes, Delete It"}
+                      </button>
+                    </div>
+                  </div> */}
+
+                  {/* <div className="mt-3 flex justify-center gap-14">
+                    <button
+                      className="px-5 py-1 rounded-lg border border-[green] text-[green]"
+                      onClick={() => handleDelete(deleteId)}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      className="px-5 py-1 rounded-lg border border-[red] text-[red]"
+                      onClick={() => {
+                        setDialogMatch(false);
+                      }}
+                    >
+                      No
+                    </button>
+                  </div> */}
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      
       </>
     )
   };

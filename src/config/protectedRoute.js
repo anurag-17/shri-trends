@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
-import Loader from "@/components/admin/loader/Index";
+import Loader from "./Loader";
 import { setToken, removeToken, adDetails } from "@/redux/adminSlice/authSlice";
 
 // import Loader from '../loader';
