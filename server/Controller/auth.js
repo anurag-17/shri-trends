@@ -25,28 +25,41 @@ exports.uploadImage = async (req, res, next) => {
 };
 
 exports.register = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { firstname, lastname, userName, email, mobile, altNumber, gstNo, companyName, password, role, address, referralCode} = req.body;
 
   const existingUser = await User.findOne({ email });
-
   if (existingUser) {
     return res.status(203).json({ error: "User with this email already exists." });
+  }
+
+  let referredBy;
+
+  // Check referral code against Admin model
+  referredBy = await Admin.findOne({ referralCode });
+
+  if (!referredBy) {
+    referredBy = await User.findOne({ referralCode });
+  }
+
+  // Check if the referral code is valid
+  if (!referredBy) {
+    return res.status(400).json({ error: "Invalid referral code" });
   }
 
   const userData = {
     email,
     // provider_ID: req.body.provider_ID,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    mobile: req.body.mobile,
     // provider: req.body.provider,
-    role: req.body.role,
-    address: req.body.address,
-    userName: req.body.userName,
-    altNumber: req.body.altNumber,
-    gstNo: req.body.gstNo,
-    companyName: req.body.companyName,
-    referredBy: req.body.referredBy
+    firstname: firstname,
+    lastname: lastname,
+    mobile: mobile,
+    role: role,
+    address: address,
+    userName: userName,
+    altNumber: altNumber,
+    gstNo: gstNo,
+    companyName: companyName,
+    referredBy: referredBy._id
   };
 
   if (password) {

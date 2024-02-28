@@ -24,6 +24,10 @@ const AdminSchema = new mongoose.Schema(
       select: false,
     },
     role: { type: String, enum: ["admin"], default: "admin" },
+    referralCode: {
+      type: String,
+      unique: true,
+    },
     activeToken: {
       type: String,
     },
@@ -36,6 +40,15 @@ const AdminSchema = new mongoose.Schema(
   }
 );
 
+const generateReferralCode = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let referralCode = '';
+  for (let i = 0; i < 5; i++) {
+    referralCode += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return referralCode;
+};
+
 AdminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -43,6 +56,11 @@ AdminSchema.pre("save", async function (next) {
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+
+  // Generate referral code if not provided
+  if (!this.referralCode) {
+    this.referralCode = generateReferralCode();
+  }
   next();
 });
 
