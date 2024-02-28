@@ -30,6 +30,7 @@ import Vendors from "../vendors/vendors";
 import { removeToken,rem_AdDetails } from "@/redux/adminSlice/authSlice";
 import Products from "../product/products";
 import Dealer from "../dealer/Dealer";
+import protectedRoute from "@/config/protectedRoute";
 
 
 const SideMenu = () => {
@@ -75,12 +76,12 @@ const SideMenu = () => {
     //   component:<Vendor/> ,
     //   icon: Users,
     // },
-    {
-      id: 6,
-      label: "Vendors",
-      component:<Vendors/> ,
-      icon: Users,
-    }
+    // {
+    //   id: 6,
+    //   label: "Vendors",
+    //   component:<Vendors/> ,
+    //   icon: Users,
+    // }
   ];
 
   const handleClick = (id) => {
@@ -250,5 +251,5 @@ const SideMenu = () => {
     </>
   )
 }
-// export default protectedRoute(SideMenu)
-export default SideMenu
+export default protectedRoute(SideMenu)
+// export default SideMenu

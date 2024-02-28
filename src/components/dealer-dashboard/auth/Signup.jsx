@@ -3,26 +3,31 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
 
 import RightSection from "./RightSection";
 
-
 const Signup = () => {
   const [loginDetails, setLoginDetails] = useState({
-    name: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
-    number: "",
+    mobile: "",
     altNumber: "",
+    role: "",
     address: "",
     gstNo: "",
     companyName: "",
+    // referredBy: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   // const state = useSelector((state) => state);
+  const router = useRouter();
 
   const InputHandler = (e) => {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
@@ -30,8 +35,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(loginDetails.number  === loginDetails.altNumber ){
-        toast.warn("Mobile no. and Alt number can't be same");
+    if (loginDetails.number === loginDetails.altNumber) {
+      toast.warn("Mobile no. and Alt number can't be same");
     }
     setLoading(true);
     try {
@@ -43,6 +48,7 @@ const Signup = () => {
       console.log(res);
       if (res?.data?.success || res.status === 201) {
         toast.success("Register successfully!");
+        router.push("/dealer/login")
         setLoading(false);
       } else {
         toast.error("Login failed please try later!");
@@ -57,6 +63,7 @@ const Signup = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="flex items-center justify-center lg:min-h-screen  ">
         <div className="md:px-[50px] w-full mx-auto">
           <div className="relative flex flex-col 2xl:gap-x-20 xl:gap-x-10 gap-x-7 gap-y-10 min-h-screen justify-center lg:shadow-none  items-center xl:flex-row space-y-8 md:space-y-0 w-[100%] px-[10px] bg-white lg:px-[40px] py-[20px] md:py-[40px] ">
@@ -76,15 +83,29 @@ const Signup = () => {
                     <div className="">
                       <input
                         type="text"
-                        name="name"
-                        placeholder="Name"
+                        name="firstname"
+                        placeholder="First Name"
                         className="sign_input w-full custom-input"
                         onChange={InputHandler}
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                        title="enter valid email ex. abc@gmail.com"
+                        // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        // title="enter valid email ex. abc@gmail.com"
                         required
                       />
                     </div>
+                    <div className="">
+                      <input
+                        type="text"
+                        name="lastname"
+                        placeholder="Last Name"
+                        className="sign_input w-full custom-input"
+                        onChange={InputHandler}
+                        // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        // title="enter valid email ex. abc@gmail.com"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid lg:grid-cols-2 gap-2 gap-y-3 mt-2 items-center">
                     <div className="">
                       <input
                         type="email"
@@ -97,13 +118,37 @@ const Signup = () => {
                         required
                       />
                     </div>
+                    <div>
+                      <label>Choose Role: </label>
+                      <select
+                      className="bg-white w-36 rounded-md border "
+                        name="role"
+                        value={loginDetails.role}
+                        onChange={InputHandler}
+                        required
+                      >
+                        <option disabled value="">Select Role</option>
+                        <option value="dealer">Dealer</option>
+                        <option value="subDealer">Sub dealer</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <input
+                        type="text"
+                        name="referredBy"
+                        placeholder="Reffered By"
+                        className="sign_input w-full custom-input"
+                        onChange={InputHandler}
+                        // required
+                      />
+                    </div>
                   </div>
 
                   <div className="grid lg:grid-cols-2 gap-2 gap-y-3 mt-2">
                     <div className="">
                       <input
                         type="number"
-                        name="number"
+                        name="mobile"
                         placeholder="Mobile number"
                         className="sign_input w-full custom-input"
                         onChange={InputHandler}
@@ -186,6 +231,7 @@ const Signup = () => {
                         required
                       ></textarea>
                     </div>
+                    
                   </div>
 
                   <div className="mt-6">
@@ -209,7 +255,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
-    </> 
+    </>
   );
 };
 
