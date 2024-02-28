@@ -18,7 +18,9 @@ const {
   updatePassword,
   uploadImage,
   verifyUser,
-  verifyAdmin
+  verifyAdmin,
+  getAdminReferralDetails,
+  getSubDealerReferralDetails
 } = require("../Controller/auth");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const storage = multer.memoryStorage();
@@ -61,6 +63,10 @@ router.delete("/deleteaUser/:id",isAuthenticatedUser, authorizeRoles("admin"), d
 
 router.route("/forgotpassword").post(forgotPassword);
 router.route("/resetpassword/:resetToken").put(resetPassword);
+
+router.route("/getAdminReferralDetails/:adminId").get(getAdminReferralDetails);
+
+router.route("/getSubDealerReferralDetails/:subDealerId").get(getSubDealerReferralDetails);
 
 router.route("/uploadImage").post(isAuthenticatedUser, authorizeRoles("admin"), upload.single('file'),uploadImage)
 

@@ -48,6 +48,14 @@ const UserSchema = new mongoose.Schema(
     companyName: {
       type: String
     },
+    referralCode: {
+      type: String,
+      unique: true,
+    },
+    referredBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -57,6 +65,15 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+const generateReferralCode = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let referralCode = '';
+  for (let i = 0; i < 5; i++) {
+    referralCode += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return referralCode;
+};
+
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -64,6 +81,11 @@ UserSchema.pre("save", async function (next) {
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+
+  // Generate referral code if not provided
+  if (!this.referralCode) {
+    this.referralCode = generateReferralCode();
+  }
   next();
 });
 

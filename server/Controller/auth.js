@@ -45,7 +45,8 @@ exports.register = async (req, res, next) => {
     userName: req.body.userName,
     altNumber: req.body.altNumber,
     gstNo: req.body.gstNo,
-    companyName: req.body.companyName
+    companyName: req.body.companyName,
+    referredBy: req.body.referredBy
   };
 
   if (password) {
@@ -485,22 +486,8 @@ exports.verifyAdmin = async (req, res) => {
 };
 
 exports.updatedUser = async (req, res) => {
-  const { _id } = req.params.id;
-  validateMongoDbId(_id);
-
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      _id,
-      {
-        firstname: req?.body?.firstname,
-        lastname: req?.body?.lastname,
-        email: req?.body?.email,
-        mobile: req?.body?.mobile,
-      },
-      {
-        new: true,
-      }
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedUser);
   } catch (error) {
     throw new Error(error);
@@ -609,5 +596,97 @@ exports.updatePassword = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Password change failed" });
+  }
+};
+
+exports.getAdminReferralDetails = async (req, res, next) => {
+  const { adminId } = req.params;
+
+  try {
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+
+    const referredUsers = await User.find({ referredBy: adminId }).populate("referredBy");
+
+    return res.status(200).json({
+      admin: {
+        _id: admin._id,
+        firstname: admin.firstname,
+        lastname: admin.lastname,
+        userName: admin.userName,
+        email: admin.email,
+        mobile: admin.mobile,
+        altNumber: admin.altNumber,
+        role: admin.role,
+        address: admin.address,
+        gstNo: admin.gstNo,
+        companyName: admin.companyName,
+        referralCode: admin.referralCode
+      },
+      referredUsers: referredUsers.map(user => ({
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        userName: user.userName,
+        email: user.email,
+        mobile: user.mobile,
+        altNumber: user.altNumber,
+        role: user.role,
+        address: user.address,
+        gstNo: user.gstNo,
+        companyName: user.companyName,
+        referralCode: user.referralCode
+      }))
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getSubDealerReferralDetails = async (req, res, next) => {
+  const { subDealerId } = req.params;
+
+  try {
+    const subDealer = await User.findById(subDealerId);
+    if (!subDealer) {
+      return res.status(404).json({ error: "Sub-dealer not found" });
+    }
+
+    const referredUsers = await User.find({ referredBy: subDealerId });
+
+    return res.status(200).json({
+      subDealer: {
+        _id: subDealer._id,
+        firstname: subDealer.firstname,
+        lastname: subDealer.lastname,
+        userName: subDealer.userName,
+        email: subDealer.email,
+        mobile: subDealer.mobile,
+        altNumber: subDealer.altNumber,
+        role: subDealer.role,
+        address: subDealer.address,
+        gstNo: subDealer.gstNo,
+        companyName: subDealer.companyName,
+        referralCode: subDealer.referralCode
+      },
+      referredUsers: referredUsers.map(user => ({
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        userName: user.userName,
+        email: user.email,
+        mobile: user.mobile,
+        altNumber: user.altNumber,
+        role: user.role,
+        address: user.address,
+        gstNo: user.gstNo,
+        companyName: user.companyName,
+        referralCode: user.referralCode
+      }))
+    });
+  } catch (error) {
+    next(error);
   }
 };
