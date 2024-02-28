@@ -13,19 +13,19 @@ export const sideMenus = [
     },
     {
       id: 2,
-      label: "Products",
+      label: "All Products",
       component: <ProductList />,
     //   icon: Users,
     },
     {
       id: 3,
-      label: "Total orders",
+      label: "Total Sale",
       component: <Orders />,
     //   icon: Users,
     },
     {
       id: 4,
-      label: "Reviews",
+      label: "Commission",
       component: <Reviews />,
     //   icon: Users,
     },

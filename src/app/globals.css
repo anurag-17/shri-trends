@@ -40,6 +40,9 @@
 .log_input{
   @apply px-4 py-2 2xl:h-[48px] h-[50px] border border-[#f3f3f3] bg-white text-[#262628] text-[15px] font-[400px] leading-normal focus-visible:outline-none placeholder:text-[14px] placeholder:text-[#262628] rounded-[10px]; 
 }
+.sign_input {
+  @apply border border-[#f3f3f3] bg-white text-[#262628] text-[15px] font-[400px] leading-normal focus-visible:outline-none placeholder:text-[14px] placeholder:text-[#262628] rounded-[6px] h-[42px]; 
+}
 }
 
 .log-btn {

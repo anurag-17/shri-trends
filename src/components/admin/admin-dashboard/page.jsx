@@ -29,6 +29,7 @@ import Vendors from "../vendors/vendors";
 // import { useAuth } from "@/components/Utils/AuthContext";
 import { removeToken,rem_AdDetails } from "@/redux/adminSlice/authSlice";
 import Products from "../product/products";
+import Dealer from "../dealer/Dealer";
 
 
 const SideMenu = () => {
@@ -52,8 +53,8 @@ const SideMenu = () => {
     },
     {
       id: 2,
-      label: "Main Dealer",
-    //   component: <Pages />,
+      label: "Dealer",
+      component: <Dealer />,
       icon: Users,
     },
     {

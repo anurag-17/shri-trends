@@ -1,9 +1,13 @@
-import Image from "next/image";
+"use client";
+import React from "react";
+import Signup from "@/components/dealer-dashboard/auth/Signup";
 
-export default function Home() {
+const page = () => {
   return (
-    <main className="">
-     <div>aa</div>
-    </main>
-  );
-}
+    <>
+     <Signup />
+    </>
+  )
+};
+
+export default page;
