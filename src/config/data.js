@@ -1,6 +1,7 @@
 import DealerDashboard from "@/components/dealer-dashboard/dashboard/dashboard-pages/DealerDashboard";
 import ProductList from "@/components/dealer-dashboard/dashboard/dashboard-pages/products/ProductList";
 import Reviews from "@/components/dealer-dashboard/dashboard/dashboard-pages/reviews/Reviews";
+import Setting from "@/components/dealer-dashboard/dashboard/dashboard-pages/setting/Setting";
 import Orders from "@/components/dealer-dashboard/dashboard/dashboard-pages/total-orders/Orders";
 
 export const sideMenus = [
@@ -12,26 +13,26 @@ export const sideMenus = [
     },
     {
       id: 2,
-      label: "Products",
+      label: "All Products",
       component: <ProductList />,
     //   icon: Users,
     },
     {
       id: 3,
-      label: "Total orders",
+      label: "Total Sale",
       component: <Orders />,
     //   icon: Users,
     },
     {
       id: 4,
-      label: "Reviews",
+      label: "Commission",
       component: <Reviews />,
     //   icon: Users,
     },
     {
       id: 5,
       label: "Settings",
-    //   component: <AppForm />,
+      component: <Setting />,
     //   icon: webIcon,
     },
     {
