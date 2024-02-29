@@ -7,7 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
 import CloseIcon from "@/components/svg/CloseIcon";
-import { removeToken, rem_DealerDetails } from "@/redux/adminSlice/authSlice";
+// import { removeToken, rem_DealerDetails } from "@/redux/adminSlice/authSlice";
+import { removeDealerToken,rem_DealerDetails } from "@/redux/dealerSlice/authSlice";
 import { sideMenus } from "@/config/data";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,7 @@ const Dealer = () => {
   const [ComponentId, setComponentId] = useState(1);
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const { token } = useSelector((state) => state?.auth);
+  const  authtoken  = useSelector((state) => state?.auth.token);
   const router = useRouter();
 
   const handleClick = (id) => {
@@ -30,24 +31,24 @@ const Dealer = () => {
     try {
       const res = await axios.get(`/api/auth/logout`, {
         headers: {
-          Authorization: token,
+          Authorization: authtoken,
           "Content-Type": "application/json",
         },
       });
       // console.log(res);
       if (res?.data?.success) {
         toast.success("Logout successfully !");
-        dispatch(removeToken());
-        // dispatch(rem_DealerDetails());
+        dispatch(removeDealerToken());
+        dispatch(rem_DealerDetails());
         router.push("/dealer/login");
       } else {
-        dispatch(removeToken());
-        // dispatch(rem_DealerDetails());
+        dispatch(removeDealerToken());
+        dispatch(rem_DealerDetails());
         router.push("/dealer/login");
       }
     } catch (error) {
-      dispatch(removeToken());
-      // dispatch(rem_DealerDetails());
+      dispatch(removeDealerToken());
+      dispatch(rem_DealerDetails());
       router.push("/dealer/login");
       console.error("Error occurred:", error);
     }
