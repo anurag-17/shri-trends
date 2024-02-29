@@ -9,6 +9,8 @@ import axios from "axios";
 
 
 import RightSection from "./RightSection";
+import Openeye from "@/components/svg/Openeye";
+import Closeeye from "@/components/svg/Closeeye";
 
 const Signup = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -66,10 +68,10 @@ const Signup = () => {
     <ToastContainer/>
       <div className="flex items-center justify-center lg:min-h-screen  ">
         <div className="md:px-[50px] w-full mx-auto">
-          <div className="relative flex flex-col 2xl:gap-x-20 xl:gap-x-10 gap-x-7 gap-y-10 min-h-screen justify-center lg:shadow-none  items-center xl:flex-row space-y-8 md:space-y-0 w-[100%] px-[10px] bg-white lg:px-[40px] py-[20px] md:py-[40px] ">
+          <div className="relative flex flex-col 2xl:gap-x-20 xl:gap-x-10 gap-x-7 gap-y-10 min-h-screen justify-center lg:shadow-none  items-center xl:flex-row space-y-8 md:space-y-0 w-[100%] px-[10px] bg-white lg:px-[40px] py-[20px] md:py-[30px] ">
             <div className="w-[100%]  xl:w-[60%] py-[20px] xl:py-0 px-[20px] lg:px-0">
               <form action="" className="" onSubmit={handleSubmit}>
-                <div className="flex flex-col  gap-3 justify-center md:max-w-[80%] lg:w-full lg:max-w-[100%] mx-auto ">
+                <div className="flex flex-col  gap-1 justify-center md:max-w-[80%] lg:w-full lg:max-w-[100%] mx-auto ">
                   <div className="text-left ">
                     <p className="mb-2 2xl:text-[40px] md:text-[35px] text-[30px] leading-[38px] font-bold">
                       Signup
@@ -121,7 +123,7 @@ const Signup = () => {
                     <div>
                       <label>Choose Role: </label>
                       <select
-                      className="bg-white w-36 rounded-md border "
+                      className="bg-white w-[200px] h-[40px] rounded-md border "
                         name="role"
                         value={loginDetails.role}
                         onChange={InputHandler}
@@ -132,16 +134,7 @@ const Signup = () => {
                         <option value="subDealer">Sub dealer</option>
                       </select>
                     </div>
-                    <div className="">
-                      <input
-                        type="text"
-                        name="referredBy"
-                        placeholder="Reffered By"
-                        className="sign_input w-full custom-input"
-                        onChange={InputHandler}
-                        // required
-                      />
-                    </div>
+                  
                   </div>
 
                   <div className="grid lg:grid-cols-2 gap-2 gap-y-3 mt-2">
@@ -194,7 +187,8 @@ const Signup = () => {
                   </div>
 
                   <div className="grid lg:grid-cols-2 gap-2 gap-y-3 mt-2">
-                    <div className="">
+                  <div>
+                    <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
@@ -204,21 +198,23 @@ const Signup = () => {
                         minLength={8}
                         required
                       />
-                      <div className="flex items-center mt-4 px-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          id="showPassword"
-                          checked={showPassword}
-                          onChange={() => setShowPassword(!showPassword)}
-                          className="mr-2"
-                        />
-                        <label
-                          htmlFor="showPassword"
-                          className="log_input-label"
-                        >
-                          Show Password
-                        </label>
+                      <div
+                        className="absolute top-3 right-[15px] cursor-pointer"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <Openeye /> : <Closeeye />}
                       </div>
+                      </div>
+                      <div className="mt-3">
+                      <input
+                        type="text"
+                        name="referredBy"
+                        placeholder="Reffered By"
+                        className="sign_input w-full custom-input"
+                        onChange={InputHandler}
+                        // required
+                      />
+                    </div>
                     </div>
 
                     <div className="">
@@ -231,8 +227,9 @@ const Signup = () => {
                         required
                       ></textarea>
                     </div>
-                    
+                   
                   </div>
+                 
 
                   <div className="mt-6">
                     <button

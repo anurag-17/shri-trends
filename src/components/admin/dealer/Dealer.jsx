@@ -264,7 +264,7 @@ const Dealer = () => {
               </div>
             </div>
             <div className="rounded-[10px] bg-white py-[30px] px-[20px] flex justify-between items-center mt-[20px] p-6 overflow-x-scroll">
-              <table className="w-full min-w-[640px] table-auto mt-[20px] ">
+              <table className="w-full min-w-[1450px] table-auto mt-[20px] ">
                 <thead className="">
                   <tr className=" ">
                     {headItems.map((items, inx) => (
@@ -290,18 +290,18 @@ const Dealer = () => {
                         <td className="text-[14px] font-[400] py-3 px-5">
                           <div className="flex flex-col md:flex-row items-center gap-x-5">
                           <button
-                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
+                            className="btn_cls"
                             onClick={() => previewUser(items?._id)}
                           >
                             Preview
                           </button>
                           <button
-                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
+                            className="btn_cls"
                             onClick={() => openModall(items?._id)}
                           >
                             Edit
                           </button>
-                            <button className="px-4 text-[13px] border rounded h-[25px] text-[red] hover:bg-[#efb3b38a]"
+                            <button className="btn_cls"
                               onClick={() => {setDeleteId(items?._id);
                                 setDialogMatch(true)}}
                             >Delete</button>
@@ -535,56 +535,7 @@ const Dealer = () => {
                      editData={editData}
                   />
 
-                  {/* <div className="mt-2">
-                    <p className="text-[12px] sm:text-[16px] font-normal ms:leading-[30px] text-gray-500 mt-4">
-                      Do you really want to delete these records? You can not
-                      view this in your list anymore if you delete!
-                    </p>
-                  </div> */}
-{/* 
-                  <div className=" mt-4 lg:mt-8">
-                    <div className="flex justify-between gap-x-5">
-                      <button
-                        className="w-full border border-1 rounded-md border-lightBlue-400 text-lightBlue-700 hover:bg-lightBlue-200 text-sm  px-2 py-3
-                              hover:border-none  border-sky-400 text-sky-700 hover:bg-sky-200 custom_btn_d "
-                        onClick={() => {
-                          setDialogMatch(false);
-                        }}
-                      >
-                        No, Keep It
-                      </button>
-
-                      <button
-                        className={`w-full  rounded-md 
-            custom_btn_d 
-                              border-red-400 text-red-700 bg-red-200  
-                              hover:border-none
-                        ${isLoader ? "bg-gray-200" : "hover:bg-red-200"}
-                        hover:border-none`}
-                        onClick={() => handleDelete(deleteId)}
-                        disabled={isLoader}
-                      >
-                        {isLoader ? "Deleting..." : "Yes, Delete It"}
-                      </button>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="mt-3 flex justify-center gap-14">
-                    <button
-                      className="px-5 py-1 rounded-lg border border-[green] text-[green]"
-                      onClick={() => handleDelete(deleteId)}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      className="px-5 py-1 rounded-lg border border-[red] text-[red]"
-                      onClick={() => {
-                        setDialogMatch(false);
-                      }}
-                    >
-                      No
-                    </button>
-                  </div> */}
+                
                 </Dialog.Panel>
               </Transition.Child>
             </div>

@@ -148,7 +148,7 @@ const Products = () => {
             <div>
               <button
                 onClick={openDrawer}
-                className="bg-blue-300 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-lg"
+                className="btn_cls"
               >
                 Add Products
               </button>
@@ -207,13 +207,13 @@ const Products = () => {
                       <td className="text-[14px] font-[400] py-3 px-5">
                         <div className="flex flex-col md:flex-row items-center gap-x-5">
                           <button
-                            className="px-4 text-[13px] border rounded h-[25px] text-sky-600 hover:bg-[#efb3b38a]"
+                            className="btn_cls"
                             onClick={() => openModall(product?._id)}
                           >
                             Edit
                           </button>
                           <button
-                            className="px-4 text-[13px] border rounded h-[25px] text-[red] hover:bg-[#efb3b38a]"
+                            className="btn_cls"
                             onClick={() => {
                               setDialogMatch(true);
                               setDeleteId(product?._id);

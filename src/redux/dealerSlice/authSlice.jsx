@@ -13,6 +13,7 @@ export const authDealSlice = createSlice({
   reducers: {
     setDealerToken: (state, action) => {
       state.token = action.payload;
+      console.log("State after setDealerToken:", state);
     },
     removeDealerToken: (state, action) => {
       state.token = null;
