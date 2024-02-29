@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
 import CloseIcon from "@/components/svg/CloseIcon";
@@ -25,8 +25,8 @@ const Dealer = () => {
     setShowDrawer(false);
   };
   const handleSignout = async () => {
-    router.push("/dealer/login");
-    return
+    // router.push("/dealer/login");
+    // return
     try {
       const res = await axios.get(`/api/auth/logout`, {
         headers: {
@@ -38,16 +38,16 @@ const Dealer = () => {
       if (res?.data?.success) {
         toast.success("Logout successfully !");
         dispatch(removeToken());
-        dispatch(rem_DealerDetails());
+        // dispatch(rem_DealerDetails());
         router.push("/dealer/login");
       } else {
         dispatch(removeToken());
-        dispatch(rem_DealerDetails());
+        // dispatch(rem_DealerDetails());
         router.push("/dealer/login");
       }
     } catch (error) {
       dispatch(removeToken());
-      dispatch(rem_DealerDetails());
+      // dispatch(rem_DealerDetails());
       router.push("/dealer/login");
       console.error("Error occurred:", error);
     }
@@ -55,6 +55,8 @@ const Dealer = () => {
 
   return (
     <section className="">
+    <ToastContainer/>
+  
       <div className="h-[50px] w-full bg-white px-[20px] flex justify-between items-center relative">
         <div
           className="py-2 px-3 flex flex-col gap-[3px] cursor-pointer "

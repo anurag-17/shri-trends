@@ -26,16 +26,15 @@ const DealerLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    router.push("/dealer");
-    return
     setLoading(true);
+  
     try {
-      const res = await axios.post("/api/auth/dealerLogin", loginDetails, {
+      const res = await axios.post("/api/auth/login", loginDetails, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(res);
+  
       if (res?.data?.success) {
         toast.success("Login successfully!");
         dispatch(setDealerToken(res?.data?.token));
@@ -56,6 +55,7 @@ const DealerLogin = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
