@@ -268,8 +268,8 @@ const Dealer = () => {
                 <thead className="">
                   <tr className=" ">
                     {headItems.map((items, inx) => (
-                      <th className="py-3 px-5 text-left bg-white" key={inx}>
-                        <p className="block text-[13px] font-medium uppercase text-[#72727b] whitespace-nowrap"> {items}</p>
+                      <th className="py-3 px-5 text-left bg-white border-b" key={inx}>
+                        <p className="block text-[13px] font-medium uppercase text-[#72727b] whitespace-nowrap "> {items}</p>
                       </th>
                     ))}
                   </tr>
@@ -279,7 +279,7 @@ const Dealer = () => {
                   {  Array.isArray(allData?.users) && 
                     allData?.users?.length > 0 &&
                     allData?.users?.map((items, index) => (
-                      <tr key={index}>
+                      <tr key={index} className="border-b">
                         <td className="text-[14px] font-[400] py-3 px-5">{index + 1}</td>
                         <td className="text-[14px] font-[400] py-3 px-5 capitalize">{items?.firstname}</td>
                         <td className="text-[14px] font-[400] py-3 px-5">{items?.email}</td>
@@ -512,7 +512,7 @@ const Dealer = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className=" w-full max-w-[1300px] transform overflow-hidden rounded-2xl bg-white py-5 px-12 text-left align-middle shadow-2xl transition-all">
+                <Dialog.Panel className=" w-full max-w-[1000px] transform overflow-hidden rounded-2xl bg-white py-5 px-12 text-left align-middle shadow-2xl transition-all">
                   <div className="flex justify-end"> <button
                       type="button"
                       onClick={()=>setDialogPreview(false)}
