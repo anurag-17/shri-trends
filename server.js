@@ -13,7 +13,8 @@ const connectDB = require("./server/Utils/db")
 const corsOptions = {
   origin: [
   "http://localhost:3000",
-  "*"
+  "*",
+  "https://shri-trends-a3k4.vercel.app"
 ],
   credentials: true,
 };

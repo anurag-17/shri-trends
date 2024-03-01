@@ -67,8 +67,6 @@ const Dealer = () => {
     <section className="">
       <ToastContainer />
 
-    
-
       <div className=" ">
         <div  className={`fixed left-0 top-0 w-64 h-full bg-gray-900 p-4 z-50 sidebar-menu text-white transition-transform
                  ${
