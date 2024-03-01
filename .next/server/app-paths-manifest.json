@@ -1,0 +1,14 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/admin/admin-dashboard/page": "app/admin/admin-dashboard/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/dealer/change-password/page": "app/dealer/change-password/page.js",
+  "/dealer/forgot-password/page": "app/dealer/forgot-password/page.js",
+  "/dealer/login/page": "app/dealer/login/page.js",
+  "/dealer/page": "app/dealer/page.js",
+  "/dealer/reset-password/[slug]/page": "app/dealer/reset-password/[slug]/page.js",
+  "/dealer/reset-password/page": "app/dealer/reset-password/page.js",
+  "/dealer/signup/page": "app/dealer/signup/page.js",
+  "/page": "app/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}
