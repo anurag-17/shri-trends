@@ -118,3 +118,23 @@
 .btn_cls{
   @apply px-3 py-2 bg-[#313A46] text-white rounded-md hover:bg-gray-600
 }
+
+
+/* Sidebar styles */
+.sidebar-menu {
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+
+.sidebar-menu.active {
+  transform: translateX(0);
+}
+
+/* Main content styles */
+.main {
+  transition: margin-left 0.3s ease;
+}
+
+.main.active {
+  margin-left: 0;
+}

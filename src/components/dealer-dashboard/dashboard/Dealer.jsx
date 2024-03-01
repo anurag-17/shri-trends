@@ -8,7 +8,10 @@ import axios from "axios";
 
 import CloseIcon from "@/components/svg/CloseIcon";
 // import { removeToken, rem_DealerDetails } from "@/redux/adminSlice/authSlice";
-import { removeDealerToken,rem_DealerDetails } from "@/redux/dealerSlice/authSlice";
+import {
+  removeDealerToken,
+  rem_DealerDetails,
+} from "@/redux/dealerSlice/authSlice";
 import { sideMenus } from "@/config/data";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +21,7 @@ const Dealer = () => {
   const [ComponentId, setComponentId] = useState(1);
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const  authtoken  = useSelector((state) => state?.auth.token);
+  const authtoken = useSelector((state) => state?.auth.token);
   const router = useRouter();
 
   const handleClick = (id) => {
@@ -54,14 +57,78 @@ const Dealer = () => {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <section className="">
-    <ToastContainer/>
-  
-      <div className="h-[50px] w-full bg-white px-[20px] flex justify-between items-center relative">
+      <ToastContainer />
+
+    
+
+      <div className=" ">
+        <div  className={`fixed left-0 top-0 w-64 h-full bg-gray-900 p-4 z-50 sidebar-menu text-white transition-transform
+                 ${
+                  isOpen
+                     ? "active"
+                     : ""
+                 }`}
+        >
+          {/* <div
+            className="absolute right-0 top-2 text-black flex flex-col gap-[5px] cursor-pointer text-right mr-3 mt-2 z-[111]"
+            onClick={toggleSidebar}
+          >
+            <div className="">
+              <Image
+                src="/dealer/whiteclose.svg"
+                alt="profile"
+                height={18}
+                width={18}
+              />
+            </div>
+          </div> */}
+          <div className="">
+            <div className="flex flex-col 2xl:gap-6 gap-3 pt-[60px] px-[10px]">
+              {sideMenus.map((item, index) => (
+                <div
+                  key={index}
+                  className={`mx-4 py-[5px] flex gap-x-3 items-center cursor-pointer  transition-colors font-semibold text-[16px] 
+                                    ${
+                                      item.id === ComponentId
+                                        ? " border-b border-b-white"
+                                        : " "
+                                    }  `}
+                  onClick={() => handleClick(item.id)}
+                >
+                  {item?.icon}
+                  <p className=" capitalize whitespace-nowrap ">{item.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="bg-white h-[1px] w-[70%] mx-auto mt-[100px]"></div>
+          </div>
+
+          <div
+            className={` mx-5 rounded text-center cursor-pointer my-3 flex items-center transition-colors dash-menu gap-x-3 font-semibold  text-[16px] hover:text-primary  }`}
+            onClick={handleSignout}
+          >
+            {/* <LogoutIcon /> */}
+            <div>
+              <p>Sign Out</p>
+            </div>
+          </div>
+        </div>
+        {/* <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div> */}
+
+        <div className={`w-full md:ml-64 bg-gray-50 min-h-screen transition-all main ${isOpen ? 'md:w-[calc(100%-256px)] ' : 'active '}`}>
+
+        <div className="h-[50px] w-full bg-white px-[20px] flex justify-between items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30 mb-[20px] ">
         <div
           className="py-2 px-3 flex flex-col gap-[3px] cursor-pointer "
-          onClick={() => setShowDrawer(true)}
+          onClick={toggleSidebar}
         >
           <div className="bg-black h-[2px] w-[20px]"></div>
           <div className="bg-black h-[2px] w-[20px]"></div>
@@ -127,66 +194,8 @@ const Dealer = () => {
               </Transition>
             </Menu>
           </div>
-
-
         </div>
-
       </div>
-
-      <div className="flex min-h-screen ">
-        <div
-          className={`w-[170px] md:h-auto z-[11] bg-d_theme text-white xl:py-[40px] xl:px-[5px] px-[5px] py-[10px] transition-all duration-1000 delay-100 ease-linear h-[100vh]
-                 ${
-                   showDrawer
-                     ? "block  absolute top-0 left-0 min-h-screen is-show"
-                     : "hidden"
-                 }`}
-        >
-          <div
-            className="absolute right-0 top-2 text-black flex flex-col gap-[5px] cursor-pointer text-right mr-3 mt-2 z-[111]"
-            onClick={() => setShowDrawer(false)}
-          >
-            <div className="">
-              <Image
-                src="/dealer/whiteclose.svg"
-                alt="profile"
-                height={18}
-                width={18}
-              />
-            </div>
-          </div>
-          <div className="">
-            <div className="flex flex-col 2xl:gap-6 gap-3 pt-[60px] px-[10px]">
-              {sideMenus.map((item, index) => (
-                <div
-                  key={index}
-                  className={`mx-4 py-[5px] flex gap-x-3 items-center cursor-pointer  transition-colors font-semibold text-[16px] 
-                                    ${
-                                      item.id === ComponentId
-                                        ? " border-b border-b-white"
-                                        : " "
-                                    }  `}
-                  onClick={() => handleClick(item.id)}
-                >
-                  {item?.icon}
-                  <p className=" capitalize whitespace-nowrap ">{item.label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="bg-white h-[1px] w-[70%] mx-auto mt-[100px]"></div>
-          </div>
-
-          <div
-            className={` mx-5 rounded text-center cursor-pointer my-3 flex items-center transition-colors dash-menu gap-x-3 font-semibold  text-[16px] hover:text-primary  }`}
-            onClick={handleSignout}
-          >
-            {/* <LogoutIcon /> */}
-            <div>
-              <p>Sign Out</p>
-            </div>
-          </div>
-        </div>
-        <div className=" bg-[#f3f3f3]  w-full">
           {sideMenus.map((item, index) => (
             <Fragment key={index}>
               {ComponentId === item.id && item.component}
