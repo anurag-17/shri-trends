@@ -39,6 +39,7 @@ const DealerLogin = () => {
         toast.success("Login successfully!");
         dispatch(setDealerToken(res?.data?.token));
         dispatch(dealerDetails(res?.data?.user));
+        // console.log(res?.data?.user,"dealer detailsss");
         setLoading(false);
         router.push("/dealer");
       } else {
