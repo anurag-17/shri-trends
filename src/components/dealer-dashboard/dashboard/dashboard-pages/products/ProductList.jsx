@@ -27,6 +27,9 @@ const ProductList = () => {
     {
       id: "",
     },
+    {
+      id: "",
+    },
   ];
   return (
     <>
