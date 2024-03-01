@@ -123,7 +123,7 @@ const Signup = () => {
                     <div>
                       <label>Choose Role: </label>
                       <select
-                      className="bg-white w-[200px] h-[40px] rounded-md border "
+                      className="bg-white 2xl:w-[377px] lg:w-[204px] h-[40px] rounded-md border "
                         name="role"
                         value={loginDetails.role}
                         onChange={InputHandler}
@@ -212,7 +212,7 @@ const Signup = () => {
                         placeholder="Reffered By"
                         className="sign_input w-full custom-input"
                         onChange={InputHandler}
-                        // required
+                        required
                       />
                     </div>
                     </div>
