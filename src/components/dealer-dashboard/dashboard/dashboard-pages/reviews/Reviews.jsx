@@ -129,7 +129,7 @@ const Reviews = () => {
                       </div>
                         </td>
                         <td className="text-[14px] font-[400] py-3 px-5 capitalize max-w-[350px]">
-                          <p className="">Can't say enough good things</p>
+                          <p className="">Cant say enough good things</p>
                           <p className="text-[#757373] font-medium mt-4 leading-[25px]">I was really pleased with the overall shopping experience. My order even included a little personal, handwritten note, which delighted me!</p>
                           <p className="text-[#757373] font-medium mt-4 leading-[25px]">The product quality is amazing, it looks and feel even better than I had anticipated. Brilliant stuff! I would gladly recommend this store to my friends. And, now that I think of it... I actually have, many times!</p>
                         </td>
