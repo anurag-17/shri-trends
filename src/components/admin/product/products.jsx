@@ -16,8 +16,8 @@ export const headItems = [
   " Description",
   " Image",
   "Price",
-  "Size",
-  "Quantity",
+  "Size/Quantity",
+ 
   "Action",
 ];
 
@@ -64,7 +64,7 @@ const Products = () => {
       .request(option)
       .then((response) => {
         setGetProduct(response?.data?.products);
-       
+
         // setEditData(response?.data);
         // setLoader(false);
       })
@@ -93,7 +93,7 @@ const Products = () => {
           toast.success("Deleted successfully !");
           setLoading(false);
           refreshData();
-          setDialogMatch(false); 
+          setDialogMatch(false);
         } else {
           setLoading(false);
           toast.error("Failed. Something went wrong!");
@@ -122,7 +122,7 @@ const Products = () => {
       const response = await axios.request(options);
       if (response.status === 200) {
         setEditData(response?.data);
-        console.log(response?.data,"abc");
+        console.log(response?.data, "abc");
         setProductId(id);
         setIsDrawerOpenO(true);
         // setLoader(false);
@@ -146,104 +146,94 @@ const Products = () => {
               Products
             </p>
             <div>
-              <button
-                onClick={openDrawer}
-                className="btn_cls"
-              >
+              <button onClick={openDrawer} className="btn_cls">
                 Add Products
               </button>
             </div>
           </div>
         </div>
 
-
-         
         <div className="rounded-[10px] bg-white 2xl:py-[30px] 2xl:px-[20px] flex justify-between items-center mt-[20px] 2xl:p-6 overflow-x-scroll">
-            <table className="w-full min-w-[640px] table-auto mt-[20px] ">
-              <thead className="">
-                <tr className="border-b ">
-                  {headItems.map((items, inx) => (
-                    <th className="py-3 px-5 text-left bg-white" key={inx}>
-                      <p className="block text-[13px] font-medium uppercase text-[#72727b]">
-                        {" "}
-                        {items}
-                      </p>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              {Array.isArray(getProduct) && getProduct.length > 0 && (
-                <tbody>
-                  {getProduct.map((product, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="text-[14px] font-[400] py-3 px-5">
-                        {index + 1}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5">
+          <table className="w-full min-w-[640px] table-auto mt-[20px] ">
+            <thead className="">
+              <tr className="border-b ">
+                {headItems.map((items, inx) => (
+                  <th className="py-3 px-5 text-left bg-white" key={inx}>
+                    <p className="block text-[13px] font-medium uppercase text-[#72727b]">
+                      {" "}
+                      {items}
+                    </p>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            {Array.isArray(getProduct) && getProduct.length > 0 && (
+              <tbody>
+                {getProduct.map((product, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="text-[14px] font-[400] py-3 px-5">
+                      {index + 1}
+                    </td>
+                    <td className="text-[14px] font-[400] py-3 px-5">
                       {product.title}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
+                    </td>
+                    <td className="text-[14px] font-[400] py-3 px-5 capitalize">
                       {product.description}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5">
-                        {/* {product.images.length > 0 && (
+                    </td>
+                    <td className="text-[14px] font-[400] py-3 px-5">
+                      {/* {product.images.length > 0 && (
         <Image
           className="w-16 flex mx-auto"
           src={product.images[0].url[0]}
           alt={product.title} width={50} height={50}
         />
       )} */}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5">
+                    </td>
+                    <td className="text-[14px] font-[400] py-3 px-5">
                       {product.price}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
-                      {product.stocks?.[0]?.size}
-                      </td>
-                      <td className="text-[14px] font-[400] py-3 px-5 capitalize">
-                      {product.stocks?.[0]?.quantity}
-                      </td>
-                      
-                      <td className="text-[14px] font-[400] py-3 px-5">
-                        <div className="flex flex-col md:flex-row items-center gap-x-5">
-                          <button
-                            className="btn_cls"
-                            onClick={() => openModall(product?._id)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn_cls"
-                            onClick={() => {
-                              setDialogMatch(true);
-                              setDeleteId(product?._id);
-                            }}
-                          >
-                            Delete
-                          </button>
+                    </td>
+                    <td className="text-[14px] font-[400] py-3 px-5 capitalize">
+                      {/* Displaying size and quantity of each stock */}
+                      {product.stocks.map((stock, stockIndex) => (
+                        <div key={stockIndex}>
+                          Size: {stock.size}, Qty: {stock.quantity}
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              )}
-            </table>
-          </div>
+                      ))}
+                    </td>
 
-      {getProduct?.pagination?.totalPages > 1 && (
-        <Pagination
-          currentPage={getProduct?.pagination?.currentPage}
-          totalCount={getProduct?.pagination?.totalPages}
-          visiblePageCount={visiblePageCount}
-        />
-      )}
+                    <td className="text-[14px] font-[400] py-3 px-5">
+                      <div className="flex flex-col md:flex-row items-center gap-x-5">
+                        <button
+                          className="btn_cls"
+                          onClick={() => openModall(product?._id)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn_cls"
+                          onClick={() => {
+                            setDialogMatch(true);
+                            setDeleteId(product?._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
 
-
-
-
-
-
-    
+        {getProduct?.pagination?.totalPages > 1 && (
+          <Pagination
+            currentPage={getProduct?.pagination?.currentPage}
+            totalCount={getProduct?.pagination?.totalPages}
+            visiblePageCount={visiblePageCount}
+          />
+        )}
       </div>
 
       {/* -----------------add product--------------- */}
@@ -272,10 +262,14 @@ const Products = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[700px] transform overflow-hidden rounded-2xl bg-white sm:py-10 p-4  sm:px-8 lg:px-10 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-2/3 sm:w-full sm:max-w-[600px] transform overflow-hidden rounded-2xl bg-white pb-10 p-4  sm:px-8 lg:px-10 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-end">
                     <button onClick={closeDrawer}>
-                      <Image className="w-8" src={cross} alt="close" />
+                      <Image
+                        className=" w-6  2xl:w-8"
+                        src={cross}
+                        alt="close"
+                      />
                     </button>
                   </div>
                   <AddProduct
@@ -429,7 +423,6 @@ const Products = () => {
                     </button>
                   </Dialog.Title>
                   <EditProduct
-                   
                     closeEditModal={closeEditModal}
                     refreshData={refreshData}
                     editData={editData}
