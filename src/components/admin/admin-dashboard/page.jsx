@@ -93,7 +93,7 @@ const SideMenu = () => {
     try {
       const res = await axios.get(`/api/auth/adminLogout`, {
         headers: {
-          Authorization: token,
+          Authorization: adminAuthToken,
           "Content-Type": "application/json",
         },
       });
