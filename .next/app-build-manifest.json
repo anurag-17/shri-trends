@@ -39,6 +39,18 @@
       "static/chunks/main-app.js",
       "static/chunks/app/dealer/login/page.js"
     ],
+    "/dealer/signup/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/dealer/signup/page.css",
+      "static/chunks/app/dealer/signup/page.js"
+    ],
+    "/dealer/change-password/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/dealer/change-password/page.css",
+      "static/chunks/app/dealer/change-password/page.js"
+    ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

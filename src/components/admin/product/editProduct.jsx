@@ -3,11 +3,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
+import cross from "../../../../public/admin/cross.svg";
+import plus from "../../../../public/admin/plus.svg";
 
 const EditProduct = ({ closeEditModal, refreshData, editData }) => {
   const adminAuthToken = useSelector((state) => state?.auth.token);
   const [isLoading, setIsLoading] = useState(false);
- 
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const productId = editData._id;
   const [productDetail, setProductDetail] = useState(editData);
@@ -54,6 +58,34 @@ const EditProduct = ({ closeEditModal, refreshData, editData }) => {
     }
   };
 
+  const handleRemoveItem = (index) => {
+    setProductDetail((prevProductDetail) => {
+      const updatedStocks = [...prevProductDetail.stocks];
+      updatedStocks.splice(index, 1);
+      return {
+        ...prevProductDetail,
+        stocks: updatedStocks,
+      };
+    });
+  };
+  const handleSizeChange = (e) => {
+    setSize(e.target.value);
+  };
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
+  };
+  const handleAddItem = () => {
+    if (size && quantity) {
+      // setProductDetail([...stock, { size, quantity }]);
+      setProductDetail((prevProductDetail) => ({
+        ...prevProductDetail,
+        stocks: [...prevProductDetail.stocks, { size, quantity }],
+      }));
+      setSize("");
+      setQuantity("");
+    }
+  };
+
   return (
     <>
       <ToastContainer autoClose={1000} />
@@ -97,42 +129,59 @@ const EditProduct = ({ closeEditModal, refreshData, editData }) => {
               />
             </div>
           </div>
-          <div className="flex ">
-            <div className="mt-2">
-              <label className="custom_input_label">Size</label>
-              <input
-                defaultValue={
-                  editData?.stocks && editData.stocks.length > 0
-                    ? editData.stocks[0].size
-                    : ""
-                }
-                type="text"
-                name="size"
-                className="custom_inputt capitalize"
-                required
-                maxLength={84}
-                onChange={inputHandler}
-              />
+          <div className="flex  items-center ">
+            <div className="">
+              <label className="custom_input_label " htmlFor="sizeInput">Size:</label>
+              <select
+                id="sizeInput"
+                value={size}
+                onChange={handleSizeChange}
+                className="custom_inputt"
+              >
+                <option disabled value="">
+                  Select Size
+                </option>
+                <option value="small">Small</option>
+                <option value="med">Med</option>
+                <option value="lg">Large</option>
+                <option value="xl">X Large</option>
+                <option value="xxl">X X large</option>
+              </select>
             </div>
-            <div className="mt-2">
-              <label className="custom_input_label">Quantity</label>
-              <input
-                defaultValue={
-                  editData?.stocks && editData.stocks.length > 0
-                    ? editData.stocks[0].quantity
-                    : ""
-                }
-                type="text"
-                name="quantity"
-                className="custom_inputt capitalize"
-                required
-                maxLength={84}
-                onChange={inputHandler}
-              />
-            </div>
-          </div>
 
-          <div className="mt-2 w-80 ">
+            <div className="">
+              <label className="custom_input_label" htmlFor="quantityInput">Quantity:</label>
+              <input
+                type="number"
+                id="quantityInput"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="custom_inputt"
+              />
+            </div>
+            <p>
+              Add
+              <Image
+                onClick={handleAddItem}
+                type="button"
+                className="cursor-pointer ml-1 w-6 flex justify-end"
+                src={plus}
+                alt="add"
+              />
+            </p>
+          </div>
+          {productDetail.stocks.map((item, index) => (
+            <div className="flex ml-6" key={index}>
+              <p>
+                Size: {item.size}, Quantity: {item.quantity}
+              </p>
+              <button onClick={() => handleRemoveItem(index)} type="button">
+                <Image className="w-6 ml-4" src={cross} alt="Remove" />
+              </button>
+            </div>
+          ))}
+
+          <div className="mt-2  ">
             <label className="custom_input_label">Dascription</label>
             <input
               defaultValue={

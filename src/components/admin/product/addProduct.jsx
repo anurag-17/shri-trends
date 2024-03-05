@@ -183,48 +183,7 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
                   </div>
                 </div>
 
-                {/* <div className="container">
-                    <div className="flex mt-3 gap-3">
-                      <div>
-                        <input
-                          maxLength={100}
-                          required
-                          type="text"
-                          value={productDetail.stocks[0].size}
-                          onChange={(e) => inputHandler(e, 0)}
-                          className="w-[100%] border p-[5px]"
-                          placeholder="Size"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          value={productDetail.stocks[0].quantity}
-                          onChange={(e) => inputHandler(e, 0)}
-                          className="w-[100%] border p-[5px]"
-                          type="text"
-                          placeholder="Quantity"
-                        />
-                      </div>
-                      <div className="flex flex-col items-center text-[12px]">
-                        <button onClick={addItem}>Add</button>
-                      </div>
-                    </div>
-                    <div>
-                      {items.map((item, index) => (
-                        <div className="flex" key={index}>
-                          <p>
-                            S : {item.size}, Q : {item.quantity}
-                          </p>
-                          <button
-                            className="ml-4"
-                            onClick={() => removeItem(index)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div> */}
+               
               </div>
 
               <div className="flex items-center gap-6">
@@ -239,11 +198,11 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
                     <option disabled value="">
                       Select Size
                     </option>
-                    <option value="Medium">Small</option>
-                    <option value="Medium">Med</option>
-                    <option value="Large">Large</option>
-                    <option value="Medium">X Large</option>
-                    <option value="Medium">X X large</option>
+                    <option value="small">Small</option>
+                    <option value="med">Med</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">X Large</option>
+                    <option value="xxl">X X large</option>
                   </select>
                 </div>
 
