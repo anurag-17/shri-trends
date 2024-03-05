@@ -120,10 +120,10 @@ const Signup = () => {
                         required
                       />
                     </div>
-                    <div>
-                      <label>Choose Role: </label>
+                    <div className="flex flex-row items-center">
+                      <label className="text-[15px] 2xl:text-[16px]">Choose Role: </label>
                       <select
-                      className="bg-white 2xl:w-[377px] lg:w-[204px] h-[40px] rounded-md border "
+                      className="bg-white w-[82%] xl:w-[69%] 2xl:w-[77%] h-[40px] rounded-md border "
                         name="role"
                         value={loginDetails.role}
                         onChange={InputHandler}
