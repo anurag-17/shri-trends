@@ -118,47 +118,11 @@ const SideMenu = () => {
     }
   };
 
-  // useEffect(() => {
-  //   // const storedToken = localStorage.getItem("token" || "");
-
-  //   if (adminAuthToken) {
-  //     verify();
-  //   } else {
-  //     setAuthenticated(false);
-  //     router.push("/admin");
-  //   }
-  // }, []);
-
-  // const verify = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const res = await axios.get(`/api/auth/verifyAdminToken/${adminAuthToken}`);
-  //     if (res?.data?.data === null) {
-  //       router.push("/admin")
-  //       destroyCookie(null, "ad_Auth", { path: "/" });
-  //     }
-  //     if (res.status === 200) {
-  //       setAuthenticated(true);
-  //       setIsLoading(false);
-  //       return;
-  //     } else {
-  //       setAuthenticated(false);
-  //       destroyCookie(null, "ad_Auth", { path: "/" });
-  //       router.push("/admin");
-  //       setIsLoading(false);
-  //     }
-  //   } catch (error) {
-  //     setAuthenticated(false);
-  //     console.error("Error occurred:", error);
-  //     destroyCookie(null, "ad_Auth", { path: "/" });
-  //     router.push("/admin");
-  //     setIsLoading(false);
-  //   }
-  // };
+  
   return (
     <>
-      <ToastContainer autoClose={2000}/>
       {isLoading && <Loader />}
+      <ToastContainer/>
       <section className="">
         <div className="flex min-h-screen relative lg:static">
           <div
@@ -170,7 +134,7 @@ const SideMenu = () => {
             <div className="bg-[black] h-[2px] w-[20px]"></div>
           </div>
           <div
-            className={`w-[250px] sm:w-[300px] bg-[#313A46]  text-[white] lg:px-[20px] px-[10px] z-[11] drawer
+            className={`w-[250px] sm:w-[300px] 2xl:w-[350px]  bg-[#313A46]  text-[white] lg:px-[20px] px-[10px] z-[11] drawer
                  ${showDrawer
                 ? "block  absolute top-0 left-0 min-h-screen is-show"
                 : "hidden lg:block"
@@ -181,12 +145,12 @@ const SideMenu = () => {
               onClick={() => setShowDrawer(false)}
             >
               <div className="">
-                {" "}
-                <CloseIcon />{" "}
+              
+                <CloseIcon />
               </div>
             </div>
 
-            <div className=" flex flex-col justify-between min-h-screen  lg:py-[40px] py-[10px] ">
+            <div className=" flex flex-col justify-between min-h-screen fixed lg:py-[40px] py-[10px] ">
               <div className="">
                 <div className="flex justify-center items-center whitespace-pre-wrap ">
                   <h1 className="2xl:text-[30px] lg:text-[26px] text-[24px] font-semibold  text-center whitespace-nowrap">

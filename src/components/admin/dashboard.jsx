@@ -101,7 +101,7 @@ const Dashboard = () => {
   return (
     <>
       <section>
-        <div className="w-[1000px] 2xl:w-[1300px] mx-auto">
+        <div className=" mx-20">
           <div className="font-bold text-[30px] 2xl:text-[35px] my-9">
             Analytics <span className="font-normal"> Dashboard </span>
           </div>

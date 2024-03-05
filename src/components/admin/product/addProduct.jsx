@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import plus from "../../../../public/admin/plus.svg";
 import Image from "next/image";
-import cross from '../../../../public/admin/cross.svg';
+import cross from "../../../../public/admin/cross.svg";
 
 const AddProduct = ({ closeDrawer, refreshData }) => {
   const adminAuthToken = useSelector((state) => state?.auth.token);
@@ -17,11 +17,16 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
   const [productDetail, setProductDetail] = useState({
     title: "",
     description: "",
-    stocks: [{ size: "", quantity: "" }],
+    stocks: [],
     price: "",
     image: [],
   });
 
+  const [stock, setStock] = useState([]);
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [items, setItems] = useState([]);
+  console.log(productDetail);
   // ------------image upload-----------------
   //   const uploadImage = async (e) => {
   //     // alert("ssas")
@@ -63,25 +68,25 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
   //     }
   // }
 
-  const inputHandler = (e, index) => {
-    const { name, value } = e.target;
+  const handleTitleChange = (e) => {
+    setProductDetail((prevProductDetail) => ({
+      ...prevProductDetail,
+      title: e.target.value,
+    }));
+  };
 
-    if (name === "size" || name === "quantity") {
-      setProductDetail((prevProductDetail) => {
-        const updatedStocks = [...prevProductDetail.stocks];
-        updatedStocks[index][name] = value;
+  const handleDescriptionChange = (e) => {
+    setProductDetail((prevProductDetail) => ({
+      ...prevProductDetail,
+      description: e.target.value,
+    }));
+  };
 
-        return {
-          ...prevProductDetail,
-          stocks: updatedStocks,
-        };
-      });
-    } else {
-      setProductDetail({
-        ...productDetail,
-        [name]: value,
-      });
-    }
+  const handlePriceChange = (e) => {
+    setProductDetail((prevProductDetail) => ({
+      ...prevProductDetail,
+      price: e.target.value,
+    }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,50 +121,45 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
     }
   };
 
-  
-  const addStockInput = () => {
-    setProductDetail((prevProductDetail) => {
-      const updatedStocks = [...prevProductDetail.stocks, { size: "", quantity: "" }];
+  const handleSizeChange = (e) => {
+    setSize(e.target.value);
+  };
 
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
+  };
+
+  const handleAddItem = () => {
+    if (size && quantity) {
+      // setProductDetail([...stock, { size, quantity }]);
+      setProductDetail((prevProductDetail) => ({
+        ...prevProductDetail,
+        stocks: [...prevProductDetail.stocks, { size, quantity }],
+      }));
+      setSize("");
+      setQuantity("");
+    }
+  };
+
+  const handleRemoveItem = (index) => {
+    setProductDetail((prevProductDetail) => {
+      const updatedStocks = [...prevProductDetail.stocks];
+      updatedStocks.splice(index, 1);
       return {
         ...prevProductDetail,
         stocks: updatedStocks,
       };
     });
   };
-
-  const StockList = ({ stocks }) => (
-    <div>
-      <p>Added Sizes and Quantities:</p>
-      <ul>
-        {stocks.map((stock, index) => (
-          <li key={index}>
-            Size: {stock.size}, Quantity: {stock.quantity}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-  const removeStockInput = (indexToRemove) => {
-    setProductDetail((prevProductDetail) => {
-      const updatedStocks = prevProductDetail.stocks.filter((_, index) => index !== indexToRemove);
-  
-      return {
-        ...prevProductDetail,
-        stocks: updatedStocks,
-      };
-    });
-  };
-
   return (
     <>
       <ToastContainer />
 
       {/* <div className=" flex justify-center  mb-3">
-        <h2 className="custom_heading_text font-semibold  text-[24px]">
-          Add Product
-        </h2>
-      </div> */}
+          <h2 className="custom_heading_text font-semibold  text-[24px]">
+            Add Product
+          </h2>
+        </div> */}
 
       <section className="">
         <form onSubmit={handleSubmit}>
@@ -177,46 +177,108 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
                       required
                       type="text"
                       name="title"
-                      onChange={inputHandler}
+                      onChange={handleTitleChange}
                       className="border w-full p-[5px]"
                     />
                   </div>
                 </div>
 
-                <div className="mt-3 gap-3">
-  {productDetail.stocks.map((stock, index) => (
-    <div key={index} className="gap-3 flex items-center">
-      <input
-        value={stock.size}
-        maxLength={100}
-        type="text"
-        name="size"
-        onChange={(e) => inputHandler(e, index)}
-        className="w-[50%] border p-[5px]"
-        placeholder="Size"
-      />
-      <input
-        value={stock.quantity}
-        maxLength={100}
-        type="text"
-        name="quantity"
-        onChange={(e) => inputHandler(e, index)}
-        className="w-[50%] border p-[5px]"
-        placeholder="Quantity"
-      />
-      <button onClick={() => removeStockInput(index)}>
-        <Image className="w-5" src={cross} alt="remove" />
-      </button>
-    </div>
-  ))}
-  <div className="flex flex-col items-center text-[12px]">
-    <p>Stock</p>
-    <Image className="w-5" src={plus} alt="image" onClick={addStockInput} />
-  </div>
-</div>
-    
+                {/* <div className="container">
+                    <div className="flex mt-3 gap-3">
+                      <div>
+                        <input
+                          maxLength={100}
+                          required
+                          type="text"
+                          value={productDetail.stocks[0].size}
+                          onChange={(e) => inputHandler(e, 0)}
+                          className="w-[100%] border p-[5px]"
+                          placeholder="Size"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          value={productDetail.stocks[0].quantity}
+                          onChange={(e) => inputHandler(e, 0)}
+                          className="w-[100%] border p-[5px]"
+                          type="text"
+                          placeholder="Quantity"
+                        />
+                      </div>
+                      <div className="flex flex-col items-center text-[12px]">
+                        <button onClick={addItem}>Add</button>
+                      </div>
+                    </div>
+                    <div>
+                      {items.map((item, index) => (
+                        <div className="flex" key={index}>
+                          <p>
+                            S : {item.size}, Q : {item.quantity}
+                          </p>
+                          <button
+                            className="ml-4"
+                            onClick={() => removeItem(index)}
+                          >
+                            X
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div> */}
               </div>
-             
+
+              <div className="flex items-center gap-6">
+                <div className="w-[60%]">
+                  <label htmlFor="sizeInput">Size:</label>
+                  <select
+                    id="sizeInput"
+                    value={size}
+                    onChange={handleSizeChange}
+                    className="w-[100%] border p-[5px] bg-white "
+                  >
+                    <option disabled value="">
+                      Select Size
+                    </option>
+                    <option value="Medium">Small</option>
+                    <option value="Medium">Med</option>
+                    <option value="Large">Large</option>
+                    <option value="Medium">X Large</option>
+                    <option value="Medium">X X large</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="quantityInput">Quantity:</label>
+                  <input
+                    type="number"
+                    id="quantityInput"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    className="w-[100%] border p-[5px]"
+                  />
+                </div>
+                <p>
+                  Add
+                  <Image
+                    onClick={handleAddItem}
+                    type="button"
+                    className="cursor-pointer ml-1 w-6 flex justify-end"
+                    src={plus}
+                    alt="add"
+                  />
+                </p>
+              </div>
+              {productDetail.stocks.map((item, index) => (
+                <div className="flex" key={index}>
+                  <p>
+                    Size: {item.size}, Quantity: {item.quantity}
+                  </p>
+                  <button onClick={() => handleRemoveItem(index)} type="button">
+                    <Image className="w-6 ml-4" src={cross} alt="Remove" />
+                  </button>
+                </div>
+              ))}
+
               <div className="flex gap-6">
                 <div>
                   <p className="text-[14px] 2xl:text-[18px]">
@@ -229,7 +291,7 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
                       required
                       type="text"
                       name="description"
-                      onChange={inputHandler}
+                      onChange={handleDescriptionChange}
                       className="border w-full  "
                       rows={3}
                       cols={40}
@@ -242,10 +304,10 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
                   <div className="">
                     <input
                       value={productDetail.price}
-                      onChange={inputHandler}
-                      maxLength={100}
+                      onChange={handlePriceChange}
+                     
                       required
-                      type="text"
+                      type="number"
                       name="price"
                       className="border  p-[5px]"
                     />
@@ -254,11 +316,11 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
               </div>
 
               {/* <button
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-                type="submit"
-              >
-                Upload Product
-              </button> */}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                  type="submit"
+                >
+                  Upload Product
+                </button> */}
             </div>
           </div>
 
@@ -295,135 +357,6 @@ const AddProduct = ({ closeDrawer, refreshData }) => {
           </div>
         </form>
       </section>
-
-      {/* <form
-        onSubmit={handleSubmit}
-        className=" bg-white border  rounded-lg 2xl:p-6 xl:p-2  lg:p-1 md:p-2 p-1  mx-auto"
-      >
-        <div className="flex">
-          <div className="w-1/2">
-            <label className="custom_input_label">Product Title</label>
-            <input
-              value={productDetail.title}
-              maxLength={100}
-              required
-              type="text"
-              name="title"
-              onChange={inputHandler}
-              className="custom_inputt text-[18px]"
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="custom_input_label">Product Description</label>
-            <input
-              value={productDetail.description}
-              maxLength={100}
-              required
-              type="text"
-              name="description"
-              onChange={inputHandler}
-              className="custom_inputt"
-            />
-          </div>
-        </div>
-        <div className="flex">
-          <div className="w-1/2">
-            <label className="custom_input_label">Size</label>
-            <input
-              value={productDetail.stocks[0].size}
-              maxLength={100}
-              required
-              type="text"
-              name="size"
-              onChange={(e) => inputHandler(e, 0)} // Use index 0 for the first stock item
-              className="custom_inputt"
-            />
-          </div>
-
-          <div className="w-1/2">
-            <label className="custom_input_label">Quantity</label>
-            <input
-              value={productDetail.stocks[0].quantity}
-              onChange={(e) => inputHandler(e, 0)} // Use index 0 for the first stock item
-              maxLength={100}
-              required
-              type="text"
-              name="quantity"
-              className="custom_inputt"
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="custom_input_label">Price</label>
-            <input
-              value={productDetail.price}
-              onChange={inputHandler}
-              maxLength={100}
-              required
-              type="text"
-              name="price"
-              className="custom_inputt"
-            />
-          </div> */}
-      {/* <div className="w-1/2">
-          <label className="custom_input_label">Image</label>
-          <div className="flex items-center w-full">
-                  <input
-                    id="file"
-                    type="file"
-                    name="image"
-                    disabled={imageDisable}
-                    onChange={inputHandler}
-                    className="w-full text-black border text-[13px] hover:white max-w-[200px] mt-2"
-                    accept="image/png,image/jpg, image/jpeg , image/*"
-                  />
-                </div>
-                   <p className="text-green-700 text-[8px] lg:text-[12px] 2xl:text-[14px]">   {imageMessage && <p>{imageMessage}</p>}</p>
-                
-        </div> */}
-      {/* <div className="">
-                {imageDisable ? (
-                  <button
-                    className="p-2 border h-[20px] flex justify-center items-center"
-                    type="button"
-                    onClick={addField}
-                  >
-                    +
-                  </button>
-                ) : (
-                  <button
-                    className={`focus-visible:outline-none  text-white text-[13px] px-4 py-1 rounded
-                    ${
-                      imageDisable
-                        ? " bg-[green]"
-                        : imageUpload
-                        ? "bg-[gray]"
-                        : "bg-[#070708] text-[white]"
-                    }`}
-                    type="button"
-                    onClick={uploadImage}
-                    disabled={imageDisable || imageUpload}
-                  >
-                    {imageDisable
-                      ? "Uploaded"
-                      : imageUpload
-                      ? "Loading.."
-                      : "Upload"}
-                  </button>
-                )}
-             
-              </div> */}
-      {/* </div>
-
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="bg-gray-400 hover:bg-gray-500 rounded-md hover:text-white mt-3 px-3 py-2 "
-            disabled={isLoading}
-          >
-            {isLoading ? "Adding Product..." : "Add Product"}
-          </button>
-        </div>
-      </form> */}
     </>
   );
 };
