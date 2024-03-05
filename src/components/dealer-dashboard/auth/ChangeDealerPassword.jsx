@@ -3,9 +3,10 @@ import Openeye from "@/components/svg/Openeye";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import RightSection from "./RightSection";
+import { useSelector } from "react-redux";
 
 const ChangeDealerPassword = () => {
   const router = useRouter();
@@ -18,7 +19,8 @@ const ChangeDealerPassword = () => {
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState("");
-  const token = JSON.parse(sessionStorage.getItem("sessionToken"));
+  // const token = JSON.parse(sessionStorage.getItem("sessionToken"));
+  const token = useSelector((state)=>state.dealer.token);
 
   const InputHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,12 +38,12 @@ const ChangeDealerPassword = () => {
         setLoading(true);
 
         const response = await axios.post(
-          "/api/auth/changepasswordAdmin",
+          "/api/auth/updatePassword",
           formData,
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: token,
             },
           }
         );
@@ -50,7 +52,7 @@ const ChangeDealerPassword = () => {
           toast.success("Password change successful!");
           setLoading(false);
           setError("");
-          sessionStorage.removeItem("sessionToken");
+          // sessionStorage.removeItem("sessionToken");
           router.push("/");
         } else {
           toast.error(response?.data || "Invalid credentials");
@@ -69,12 +71,13 @@ const ChangeDealerPassword = () => {
   return (
     <>
       <>
+      <ToastContainer/>
         <div className="flex items-center justify-center lg:min-h-screen  ">
           <div className="md:px-[50px] w-full mx-auto">
             <div className="relative flex flex-col 2xl:gap-x-20 xl:gap-x-10 gap-x-7 min-h-screen justify-center lg:shadow-none  items-center lg:flex-row space-y-8 md:space-y-0 w-[100%] px-[10px]bg-white lg:px-[40px] py-[20px] md:py-[40px] ">
               <div
                 className="absolute right-10 top-6 bg-[#e5f0fa] hover:bg-[#c5dcf0] px-3 py-1 rounded cursor-pointer flex items-center gap-3"
-                onClick={() => router.push(-1)}
+                onClick={() => router.push("/dealer")}
               >
                 <Backarrow />
                 Go back

@@ -263,13 +263,13 @@ const Dealer = () => {
                 </div>
               </div>
             </div>
-            <div className="rounded-[10px] bg-white py-[30px] px-[20px] flex justify-between items-center mt-[20px] p-6 overflow-x-scroll">
-              <table className="w-full min-w-[1450px] table-auto mt-[20px] ">
+            <div className="rounded-[10px] 2xl:w-full w-[1050px]  bg-white py-[30px] px-[20px] flex justify-between items-center mt-[20px] p-6 overflow-x-scroll">
+              <table className=" table-auto mt-[20px]  2xl:w-full">
                 <thead className="">
                   <tr className=" ">
                     {headItems.map((items, inx) => (
                       <th className="py-3 px-5 text-left bg-white border-b" key={inx}>
-                        <p className="block text-[13px] font-medium uppercase text-[#72727b] whitespace-nowrap "> {items}</p>
+                        <p className="block text-[11px] font-medium uppercase text-[#72727b] whitespace-nowrap "> {items}</p>
                       </th>
                     ))}
                   </tr>
@@ -280,14 +280,14 @@ const Dealer = () => {
                     allData?.users?.length > 0 &&
                     allData?.users?.map((items, index) => (
                       <tr key={index} className="border-b">
-                        <td className="text-[14px] font-[400] py-3 px-5">{index + 1}</td>
-                        <td className="text-[14px] font-[400] py-3 px-5 capitalize">{items?.firstname}</td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.email}</td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.mobile} </td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.companyName} </td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.gstNo} </td>
-                        <td className="text-[14px] font-[400] py-3 px-5">{items?.address} </td>
-                        <td className="text-[14px] font-[400] py-3 px-5">
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-2">{index + 1}</td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5 capitalize">{items?.firstname}</td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5">{items?.email}</td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5">{items?.mobile} </td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5">{items?.companyName} </td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5">{items?.gstNo} </td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-2">{items?.address} </td>
+                        <td className="text-[12px] 2xl:text-[16px] font-[400] py-3 px-5">
                           <div className="flex flex-col md:flex-row items-center gap-x-5">
                           <button
                             className="btn_cls"

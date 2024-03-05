@@ -24,7 +24,7 @@ const Signup = () => {
     address: "",
     gstNo: "",
     companyName: "",
-    // referredBy: "",
+    referredBy: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);

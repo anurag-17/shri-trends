@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 
 import CloseIcon from "@/components/svg/CloseIcon";
 // import { removeToken, rem_DealerDetails } from "@/redux/adminSlice/authSlice";
@@ -15,13 +16,14 @@ import {
 import { sideMenus } from "@/config/data";
 import Image from "next/image";
 import Link from "next/link";
+import DealerProtectedRoute from "@/config/dealerProtectedRoute";
 
 const Dealer = () => {
   const dispatch = useDispatch();
   const [ComponentId, setComponentId] = useState(1);
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const authtoken = useSelector((state) => state?.auth.token);
+  const authtoken = useSelector((state) => state?.dealer.token);
   const router = useRouter();
 
   const handleClick = (id) => {
@@ -43,16 +45,16 @@ const Dealer = () => {
         toast.success("Logout successfully !");
         dispatch(removeDealerToken());
         dispatch(rem_DealerDetails());
-        router.push("/dealer/login");
+        router.push("/");
       } else {
         dispatch(removeDealerToken());
         dispatch(rem_DealerDetails());
-        router.push("/dealer/login");
+        router.push("/");
       }
     } catch (error) {
       dispatch(removeDealerToken());
       dispatch(rem_DealerDetails());
-      router.push("/dealer/login");
+      router.push("/");
       console.error("Error occurred:", error);
     }
   };
@@ -171,7 +173,7 @@ const Dealer = () => {
                   <div className="p-1 flex flex-col gap-4">
                     <Menu.Item>
                       <Link
-                        href="/change-password"
+                        href="dealer/change-password"
                         className="flex gap-x-3  hover:underline text-gray-700 rounded  text-sm group transition-colors items-center"
                       >
                         {/* <PasswordIcon className="h-4 w-4 mr-2" /> */}
@@ -179,13 +181,13 @@ const Dealer = () => {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link
-                        href="/login"
+                      <button
+                          onClick={handleSignout}
                         className="flex gap-x-3  hover:underline text-gray-700 rounded  text-sm group transition-colors items-center"
                       >
                         {/* <SignOutIcon /> */}
                         Sign out
-                      </Link>
+                      </button>
                     </Menu.Item>
                   </div>
                 </Menu.Items>
@@ -205,4 +207,5 @@ const Dealer = () => {
   );
 };
 
-export default Dealer;
+// export default Dealer;
+export default DealerProtectedRoute(Dealer);
